@@ -1,0 +1,33 @@
+# Power BI temp / backup files
+*.pbix.bak
+~$*.pbix
+*.pbix.tmp
+
+# Excel temp files (file lock indicators)
+~$*.csv
+~$*.xlsx
+~$*.xls
+
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+$RECYCLE.BIN/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+
+# SQL Server local backups
+*.bak
+*.trn
+*.ldf
+
+# Logs / temp
+*.log
+tmp/
+temp/
