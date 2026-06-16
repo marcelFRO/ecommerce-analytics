@@ -59,6 +59,8 @@ The dataset (originally **theLook eCommerce**, a fictional clothing retailer dat
 
 3. **Multi-department applicability** — the schema supports questions for C-Level, Sales & Product, Customer & Marketing, and Operations. This enables dashboard structure mirroring how a real business consumes analytics: by stakeholder, not by visualization type.
 
+**Data lineage note (transparency):** this project began under the assumption that `recruit41/ecommerce-dataset` was an original GitHub-hosted dataset. Mid-project investigation revealed it was a CSV mirror of the well-known **theLook eCommerce** public dataset from Google BigQuery (`looker-private-demo.thelook_ecommerce`). By the time this was clear, the SQL Server import pipeline — including data quality remediation (comma-in-name fixes, encoding issues, NVARCHAR → DATETIMEOFFSET conversion) — was already established. Migrating to direct BigQuery access would have meant rebuilding the data layer for no analytical gain (the analysis is identical regardless of source). Surfacing this rather than retroactively framing it as a deliberate BigQuery rejection is part of the project's documentation discipline.
+
 ### Anti-tutorial framing
 
 A common portfolio failure mode is **chart hunting** — opening the data and looking for "something interesting" to plot. This project deliberately avoided that pattern.
