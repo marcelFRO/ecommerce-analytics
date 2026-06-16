@@ -47,7 +47,7 @@ Six headline findings from analyzing 125K orders, 100K customers, and 491K inven
 
 ## Project Origin & Business Context
 
-This project was built with intentional discipline around how data analytics work is structured for executive consumption.
+This project was built with intentional discipline around how data analytics work is structured for executive decision-making.
 
 ### Why this dataset
 
