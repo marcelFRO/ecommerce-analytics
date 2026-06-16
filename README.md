@@ -39,7 +39,7 @@ Six headline findings from analyzing 125K orders, 100K customers, and 491K inven
 
 - **Only 2,416 of 100K customers (2.4%) were acquired via Email channel** — despite all 100K customers having email addresses on file. The 97.6% acquired through other channels (Search, Organic, Facebook, Display) represents massive untapped re-engagement potential — the company never followed up these customers via email marketing despite having their addresses.
 
-- **Operational inventory crisis: 74% of stock is old collection (pre-2023)** with $1.13M frozen in Jeans and $981K in Outerwear & Coats. Combined with 70.2% single-item orders, this signals two opportunities: bundling promotions (cross-sell mechanics) and discontinuation candidates (Jumpsuits, Clothing Sets — low margin + low volume).
+- **Inventory crisis: 20 of 26 categories have unsold stock cost exceeding their all-time revenue.** Worst relative ratios: Socks (147%), Clothing Sets (141%), Suits (141%), Leggings (133%). Largest absolute frozen capital: Jeans ($1.14M), Outerwear & Coats ($981K), Sweaters ($691K). Combined with 70.2% single-item orders, signals two opportunities: bundling promotions and discontinuation candidates from intersection of low margin + over-stocked categories (Suits, Clothing Sets, Jumpsuits). *Note: absolute dollar values reflect synthetic dataset generation patterns (see [Limitations](#limitations--caveats)); cross-category ratios are the robust analytical signal.*
 
 - **Quality signal: 28.5% return rate** at the high end of industry range (20–30%); every single category exceeds the 25% benchmark, with Suits and Suits & Sport Coats leading at 31%. Combined with 39.6% Suits margin, this suggests systematic markdown / clearance pricing in that category.
 
@@ -79,14 +79,14 @@ Data exploration followed the **CLEAN framework** — a structured approach to a
 
 ### Business model hypothesis
 
-The project treats theLook as a fictitious operating company. Based on data signals, theLook reads as a **wide-catalog multi-brand online retailer**, (long-tail aggregator model with own inventory), not a vertically integrated D2C brand:
+The project treats theLook as a fictitious operating company. Based on data signals, theLook reads as a **wide-catalog multi-brand online retailer** (long-tail aggregator model with own inventory), not a vertically integrated D2C brand:
 
 - **Top 10 products generate only 0.94% of revenue** — no flagship product portfolio, extreme long tail
 - **~41% of catalog generates 80% of revenue** — much flatter than typical 20/80 Pareto, consistent with reselling many SKUs at low velocity each
 - **74% of stock is old collection (pre-2023)** — suggests passive stock turnover, not active SKU lifecycle management typical of vertical retailers
 - **All traffic sources show identical loyalty (1.39–1.41 orders per customer)** — channels don't differentiate customer behavior, which is unusual for vertically integrated brands that typically build channel-specific affinity (e.g., direct email loyalists vs paid acquisition one-timers)
 - **Email reaches only 2.4% of customers despite full email coverage** — no built-out CRM infrastructure, also typical of marketplace operators relying on traffic acquisition
-- **- Own inventory + warehouses** (490K stock units, 10 distribution centers, $2.1M frozen capital in slow categories) — rules out pure marketplace or dropshipping models, which wouldn't carry inventory risk
+- **Own inventory + warehouses** (490K stock units, 10 distribution centers, $2.1M frozen capital in slow categories) — rules out pure marketplace or dropshipping models, which wouldn't carry inventory risk
 
 This hypothesis affects how findings are interpreted. For example, the 76.6% one-time buyer rate is **not a brand crisis** — it's structural to multi-brand retailer economics (customers loyal to brands carried, not to the platform). Conversely, the $2.1M frozen inventory is a **real and significant** capital problem precisely because the company carries its own stock — unlike marketplace operators who could simply delist slow SKUs at zero capital cost. The recommendation isn't "build loyalty programs" (vertical brand thinking) but rather "activate the unused CRM channel to convert one-time buyers via discount codes."
 
@@ -784,13 +784,15 @@ Below the header, the **main canvas** uses a 2×2 grid layout (Executive Overvie
 
 ### Operational findings
 
-5. **Inventory crisis** — 74% of stock is old collection (pre-2023), with $1.13M frozen in Jeans and $981K in Outerwear & Coats. Independent of category — systemic stock rotation problem, not a category-specific issue.
+5. **Systemic inventory imbalance** — 20 of 26 categories show unsold stock cost exceeding their all-time revenue, aggregating to $8.85M unsold inventory against $7.62M cumulative revenue (116% ratio). Worst relative offenders: Socks (147%), Clothing Sets (141%), Suits (141%). Largest absolute frozen capital in Jeans ($1.14M) and Outerwear & Coats ($981K). Pattern is broad and structural, not category-specific. *(See Limitations section for note on absolute value reliability vs relative cross-category ratios.)*
 
-6. **Quality signal across categories** — 28.5% overall return rate at the high end of industry range (20–30%); **every single category exceeds 25%**. Suits and Suits & Sport Coats lead at 31%. Combined with 39.6% Suits margin (low), clearance pricing is plausible explanation.
+6. **Blazers & Jackets is the highest-ROI marketing target** — triple-positive intersection: highest margin in catalog (62%), best inventory health (87% inventory-to-revenue, only category where stock moves as fast as it accumulates), and lowest revenue share (2.7%). Every promotional dollar invested here returns the most contribution margin, faces no inventory bloat risk, and has the most room to grow share. Conversely, Suits cross the opposite intersection: lowest margin (39.6%), over-stocked (141%), low revenue — clean discontinuation candidate.
 
-7. **No quality-logistics correlation** — categories distribute across the Operations Health Quadrant without a discernible "slow delivery → more returns" pattern. Returns are quality-driven (product fit, materials, expectations), not logistics-driven. Investment in faster delivery would not move return rates.
+7. **Quality signal across categories** — 28.5% overall return rate at the high end of industry range (20–30%); **every single category exceeds 25%**. Suits and Suits & Sport Coats lead at 31%. Combined with 39.6% Suits margin (low), clearance pricing is plausible explanation.
 
-8. **Bundling opportunity** — 70.2% single-item orders. Cross-sell mechanics (recommended pairings, bundle discounts) underdeveloped. Cheaper to lift AOV via bundling than to acquire new customers.
+8. **No quality-logistics correlation** — categories distribute across the Operations Health Quadrant without a discernible "slow delivery → more returns" pattern. Returns are quality-driven (product fit, materials, expectations), not logistics-driven. Investment in faster delivery would not move return rates.
+
+9. **Bundling opportunity** — 70.2% single-item orders. Cross-sell mechanics (recommended pairings, bundle discounts) underdeveloped. Cheaper to lift AOV via bundling than to acquire new customers.
 
 ### Prioritized recommendations
 
@@ -799,7 +801,7 @@ Below the header, the **main canvas** uses a 2×2 grid layout (Executive Overvie
 | 1 | **Email re-engagement campaign with discount codes targeting one-time buyers** | Activates the unused 97.6% of email-eligible customers; clears old stock + builds repeat behavior; lowest cost intervention with largest data-supported upside | Low |
 | 2 | **Discontinue Jumpsuits, Clothing Sets, possibly Suits** | Low margin + low revenue share + high return rate (Suits 31%); frozen capital that won't recover via natural sales velocity | Medium |
 | 3 | **Bundle promotion mechanics** | 70.2% single-item orders represent immediate AOV upside; cheaper than acquisition | Medium |
-| 4 | **Marketing investment in Blazers & Jackets** | Highest margin in catalog (62%) but only 2.7% revenue share — undermarketed strategic asset; potential premium-tier anchor | Low–Medium |
+| 4 | **Marketing investment in Blazers & Jackets** | Triple-positive: highest margin (62%) + best inventory health (87% inventory-to-revenue) + low revenue share (2.7%) — highest-ROI marketing target in catalog. Every dollar invested returns maximum contribution margin with no inventory bloat risk. | Low–Medium |
 | 5 | **Old-collection markdown event** | $1.13M frozen in Jeans, $981K in Outerwear — turn capital that's locked anyway; do not protect prices on stock that hasn't moved in 12+ months | Low |
 
 </details>
@@ -824,6 +826,7 @@ This section documents **decisions that could have gone other ways**, with ratio
 - **Import mode over DirectQuery** — Power Query transformations + static SQL outputs require Import; performance benefits for a ~927K row model justify the loss of real-time refresh.
 - **`Date Only` calculated column in Power Query** — resolved `DATETIMEOFFSET` vs `Date` type mismatch when linking fact table to dimDate. Type matching is mandatory for Power BI relationships.
 - **Censored data principle for Return Rate** — denominator restricted to `Complete + Returned` (delivered orders), excluding `Shipped + Processing` which haven't entered the return-eligible state. Standard statistical practice when measuring rates of an event with a time lag.
+- **Inventory analysis presented via relative ratios + absolute dollars, with caveat** — investigation revealed dataset synthetic limitations (total unsold inventory cost 116% of all-time revenue, implausibly high for a healthy growing retailer). Kept absolute dollar figures for executive dashboard readability but documented the data quality concern transparently in Limitations + flagged cross-category ratios as the robust analytical layer. This is a real-world tradeoff between presentation clarity and analytical precision.
 
 ### Visual & UX decisions
 
@@ -863,6 +866,8 @@ Honest framing of where this project stops:
   - **Avg delivery time of 3.9 days** is unrealistically fast for a globally distributed retailer (real benchmarks 5–10 days). Likely a data generation simplification.
   - **China dominance (34.6% revenue)** is atypical for a clothing e-commerce site of this generic profile. Could be synthetic geographic bias.
   - **Perfect price stability ($59–60) across 5 years** suggests no real inflation modeling, which would be unrealistic for 2019–2023 inclusive of COVID supply chain disruption.
+
+- **Inventory cost values reflect synthetic dataset generation, not realistic retail dynamics** — total unsold inventory cost ($8.85M wholesale, ~$17.5M retail value at average markup) exceeds cumulative 5-year revenue ($7.5M), implying ~2.4 years of retail value sitting unsold. For a healthy retailer with 238% YoY growth, this is implausibly high — real benchmarks would suggest inventory-to-revenue ratios well below 40% across ALL categories combined. The synthetic generator likely created a baseline inventory pool (~17 units per SKU × 29K products = ~490K units) without modeling realistic depletion dynamics. **Absolute dollar inventory values are therefore suspect**; relative cross-category ratios (which categories are MORE vs LESS over-stocked) remain the analytically robust signal.
 
 - **Data quality artifacts not removed** — 17% of `order_items` rows have `shipped_at < created_at`. Excluded from time-based analysis but kept in volume aggregates (decision documented). A production deployment would want this fixed at the data generation source.
 
