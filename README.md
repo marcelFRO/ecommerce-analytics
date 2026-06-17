@@ -180,21 +180,21 @@ To avoid chart hunting, the project started with a structured list of business q
 **4. Which categories balance margin and volume best?**
 
 - **Answer:** Blazers & Jackets have the highest margin (62%) but only 2.7% revenue share — triple-positive intersection when combined with best inventory health (87%, see Q5), making it the highest-ROI marketing target in the catalog. Jeans paradox: #2 revenue ($876K) but low margin (46.5%) — high volume masking weak profitability. Suits at 39.6% margin signal possible clearance pricing (and over-stocked at 141% inventory-to-revenue ratio — discontinuation candidate).
-- **Where in dashboard:** Category Profitability scatter (TR) on Sales & Product. X = Total Items Sold, Y = Avg Margin %, bubble size = Total Revenue. Custom tooltip surfaces Avg Margin %, Revenue Share %, Total Items, Total Revenue per category.
+- **Where in dashboard:** Category Profitability scatter (TR) on Sales & Product. X = Total Items Sold, Y = Avg Margin %, bubble size = Total Revenue. **Top-right quadrant labeled "Strategic Darlings"** (high margin × high volume — ideal categories to invest in). Custom tooltip surfaces Avg Margin %, Revenue Share %, Total Items, Total Revenue per category.
 
 ![Category Profitability scatter – clean view](images/sales-product-3.png)
 
 **5. What inventory is slow-moving and how much capital is frozen?**
 
 - **Answer:** ~74% of all stock is old collection (added before 2023). 20 of 26 categories show unsold stock cost exceeding their all-time revenue — worst relative offenders: Socks (147%), Clothing Sets (141%), Suits (141%). Largest absolute frozen capital: Jeans ($1.14M), Outerwear & Coats ($981K), Sweaters ($691K). Inventory measures use `REMOVEFILTERS(dimDate)` since stock is a point-in-time snapshot, not time-series. *Note: absolute dollar values may be inflated by synthetic data generation; relative cross-category ratios are the robust analytical signal (see Limitations).*
-- **Where in dashboard:** Inventory Health TL on Sales & Product.
+- **Where in dashboard:** Inventory Health TL on Sales & Product. Dynamic annotation displays current state independent of Year selection: *"Old Stock % stays consistent: 73%–77% range across categories"* — communicates that inventory snapshot is time-independent (and that no single category escapes the broad stock-rotation problem).
 
 ![Inventory Health by category](images/sales-product-4.png)
 
 **6. What is the order composition — single vs multi-item?**
 
 - **Answer:** 70.2% of orders are single-item — strong bundling opportunity. Suggests cross-sell mechanics (recommended pairings, bundle discounts) underdeveloped.
-- **Where in dashboard:** Order Composition donut BL on Sales & Product.
+- **Where in dashboard:** Order Composition donut BL on Sales & Product. Dynamic annotation displays headline finding inline: *"Single-item orders dominate: 70.2% · bundling opportunity"* — translates raw distribution into actionable framing (visual doesn't just show what is — it points to what to do).
 
 ![Order Composition donut](images/sales-product-5.png)
 
