@@ -46,7 +46,7 @@ Six headline findings from analyzing 125K orders, 100K customers, and 491K inven
 
 - **COVID-driven 238% revenue growth (2019→2020), sustained through 2023** — revenue scaled from $121K (2019) to $2.8M (2023), with no country recording a decline across the full period. Growth is volume-driven, not price-driven (avg item price stable at $59–60 every year), and geographically broad-based.
 
-- **Business model signals point to wide-catalog multi-brand retailer with own inventory** — top 10 products generate only 0.94% of revenue (extreme long tail), 74% of stock is old collection, and every traffic source delivers identical loyalty (1.39–1.41 orders per customer). theLook reads as a long-tail aggregator carrying many brands across diverse categories, not a vertically integrated D2C brand.
+- **Business model signals point to wide-catalog multi-brand retailer with own inventory** — top 10 products generate only 0.97% of revenue (extreme long tail), 74% of stock is old collection, and every traffic source delivers identical loyalty (1.39–1.41 orders per customer). theLook reads as a long-tail aggregator carrying many brands across diverse categories, not a vertically integrated D2C brand.
 
 - **Customer loyalty crisis: 76.6% buy only once, top 10% generates just 34.3% of revenue** versus industry norm 50–60%. Flat Pareto / Gini ~0.3–0.4 — revenue from breadth, not whales. Strategic implication: mid-tier customer activation beats VIP retention. Returning cohort rate grew organically from 0% (2019) to 20.3% (2023) without explicit campaigns.
 
@@ -96,8 +96,8 @@ Data exploration followed the **CLEAN framework** — a structured approach to a
 
 The project treats theLook as a fictitious operating company. Based on data signals, theLook reads as a **wide-catalog multi-brand online retailer** (long-tail aggregator model with own inventory), not a vertically integrated D2C brand:
 
-- **Top 10 products generate only 0.94% of revenue** — no flagship product portfolio, extreme long tail
-- **~41% of catalog generates 80% of revenue** — much flatter than typical 20/80 Pareto, consistent with reselling many SKUs at low velocity each
+- **Top 10 products generate only 0.97% of revenue** — no flagship product portfolio, extreme long tail
+- **~44% of catalog generates 80% of revenue** — much flatter than typical 20/80 Pareto, consistent with reselling many SKUs at low velocity each
 - **74% of stock is old collection (pre-2023)** — suggests passive stock turnover, not active SKU lifecycle management typical of vertical retailers
 - **All traffic sources show identical loyalty (1.39–1.41 orders per customer)** — channels don't differentiate customer behavior, which is unusual for vertically integrated brands that typically build channel-specific affinity (e.g., direct email loyalists vs paid acquisition one-timers)
 - **Email reaches only 2.4% of customers despite full email coverage** — no built-out CRM infrastructure, also typical of marketplace operators relying on traffic acquisition
@@ -790,7 +790,7 @@ Below the header, the **main canvas** uses a 2×2 grid layout (Executive Overvie
 
 ### Strategic findings
 
-1. **Wide-catalog multi-brand retailer with own inventory** — extreme long-tail product distribution (top 10 SKUs = 0.94% revenue), passive inventory aging ($2.1M frozen capital), channel-undifferentiated customer behavior. theLook is a long-tail aggregator carrying many brands, not a vertical D2C brand. Findings should be interpreted through multi-brand retailer economics (capital-at-risk in inventory, range vs depth trade-off), not vertical brand playbooks.
+1. **Wide-catalog multi-brand retailer with own inventory** — extreme long-tail product distribution (top 10 SKUs = 0.97% revenue), passive inventory aging ($2.1M frozen capital), channel-undifferentiated customer behavior. theLook is a long-tail aggregator carrying many brands, not a vertical D2C brand. Findings should be interpreted through multi-brand retailer economics (capital-at-risk in inventory, range vs depth trade-off), not vertical brand playbooks.
 
 2. **Volume-driven growth, not premium pricing** — 238% revenue acceleration in 2020 sustained through 2023 with avg item price perfectly flat at $59–60. Growth was geographic and demographic breadth, not category mix upgrade or price action.
 
