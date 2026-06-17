@@ -227,34 +227,47 @@ To avoid chart hunting, the project started with a structured list of business q
 
 <br>
 
+![Customer & Marketing – full page](images/customer-marketing-1.png)
+
+---
+
 **9. What is the customer repeat purchase rate trend?**
 
 - **Answer:** 76.6% of customers buy only once at lifetime level. However, repeat purchase rate (cohort-based: customers with at least one order in any prior year) grew organically from 0% in 2019 (structural baseline — no prior years) to 20.3% by 2023 — year-over-year improvement in organic retention achieved without explicit campaign intervention. Broad-based customer acquisition with improving retention over time.
 - **Where in dashboard:** Customer Retention static SQL visual on Customer & Marketing (BL). Year-over-year trend, not reactive to peer-visual cross-filtering by design (multi-year narrative preserved).
+
+![Customer Retention – new vs returning by year](images/customer-marketing-3.png)
 
 **10. How does customer value distribute — Pareto pattern?**
 
 - **Answer:** Top 10% of customers generate 34.3% of revenue versus industry norm 50–60%. Flat Pareto / Gini ~0.3–0.4 — revenue from breadth not whales. Strategic implication: mid-tier activation > VIP retention.
 - **Where in dashboard:** Customer Pareto bar chart TR on Customer & Marketing. Static SQL output structure (decile_table), with reactive measures pulling from `query_customer_revenue_year` (Year-filtered customer revenue at day granularity).
 
+![Customer Pareto – decile distribution](images/customer-marketing-4.png)
+
 **11. What is the demographic structure — age, country, gender, traffic source?**
 
 - **Answer:** Age distribution remarkably flat at 8.4K–11.6K customers per bracket — no dominant demographic, broad assortment strategy confirmed. Country: China dominant. Gender: approximately balanced. Field Parameter dropdown lets viewer switch dimensions without rebuilding the visual.
 - **Where in dashboard:** Total Customers by Demographic TL on Customer & Marketing, with Age / Country / Gender Field Parameter toggle.
 
-![Customer & Marketing – Age buckets view](images/customer-marketing-1.png)
+![Demographic visual – Age view](images/customer-marketing-5.png)
 
-![Customer & Marketing – Country breakdown view](images/customer-marketing-2.png)
+![Demographic visual – Country view](images/customer-marketing-6.png)
+
+![Demographic visual – Gender view](images/customer-marketing-7.png)
 
 **12. Which traffic sources deliver loyal customers vs one-time buyers?**
 
-- **Answer:** All traffic sources show identical loyalty (1.39–1.41 orders per customer) — channel choice doesn't differentiate repeat behavior. Only 2,416 customers (2.4%) were acquired via Email channel, despite all 100K customers having email addresses on file — the 97.6% reached via other channels represents untapped email re-engagement potential. Search dominates channel revenue contribution.
-- **Where in dashboard:** Channel Performance bar chart BR on Customer & Marketing. Uses `Channel Revenue per $100` measure (decomposition of revenue across channels, sums to $100) — explicit anchor avoids AOV cognitive coupling. Search bar highlighted gold (`#ED942D`) as the dominant channel; others deep navy (`#132E57`).
+- **Answer:** All traffic sources show identical loyalty (1.39–1.41 orders per customer) — channel choice doesn't differentiate repeat behavior. Only 2,416 customers (2.4%) were acquired via Email channel, despite all 100K customers having email addresses on file — the 97.6% reached via other channels represents untapped email re-engagement potential. For per-channel revenue contribution breakdown, see Q13.
+- **Where in dashboard:** Channel Performance bar chart BR on Customer & Marketing. Uses `Channel Revenue per $100` measure (decomposition of revenue across channels, sums to $100) — explicit anchor avoids AOV cognitive coupling. Search bar highlighted gold (`#ED942D`), others deep navy (`#132E57`).
 
-**13. Does traffic source affect return rate?**
+![Channel Performance – Revenue contribution per $100](images/customer-marketing-8.png)
 
-- **Answer:** No meaningful difference — all channels cluster at 14.7–15.6% return rate (within ±1 percentage point). Confirms that channel quality is not a return-rate driver; product/category quality is the dominant factor.
-- **Where in dashboard:** Cross-referenced via Operations Quality Signal (TR) under traffic source filter context. SQL analysis surfaced the finding; visual confirmation through cross-filtering Channel Performance + Quality Signal.
+**13. Which acquisition channel generates the most revenue contribution — and what does this say about channel efficiency?**
+
+- **Answer:** Search dominates raw revenue contribution: per $100 of channel-attributed revenue, Search generates $70.06, with Organic at $15.09, Facebook at $5.78, Email at $4.98, and Display at $4.09. **But the strategic implication is not "scale Search further" — it's that low-cost channels are dramatically underutilized.** Search dominance comes paired with paid acquisition costs (cost-per-click); Email's $4.98 contribution is achieved at **near-zero marginal cost** (sending to existing customer base); Facebook's $5.78 is largely from organic posts (only Facebook Ads carry real cost). Combined with Q12's finding that all channels deliver identical customer loyalty (1.39–1.41 orders per customer), the cost-efficiency conclusion is clear: **Email and Facebook are the high-ROI growth levers, not Search**. Email is especially underutilized — 100K customers have email addresses on file (registration data) but only 2,416 (2.4%) were acquired via this channel. Expanding email and Facebook outreach likely delivers higher marginal ROI than further investment in paid Search, where diminishing returns on CAC are inevitable at this scale of dominance.
+- **Strategic synthesis:** Email's role extends beyond cost-efficiency — a single promotional program (discount codes, bundle offers) addresses three structural problems concurrently (76.6% one-time buyers Q9, 70.2% single-item orders Q6, inventory bloat Q5). Three KPIs from three departments lifted through one low-cost intervention. See **Strategic Finding 5** in [Key Insights](#key-insights--recommendations) for full discussion.
+- **Where in dashboard:** Channel Performance bar chart BR on Customer & Marketing — same visual supports Q12. Uses `Channel Revenue per $100` measure (decomposition of revenue across channels, sums to $100 — explicit anchor avoids AOV cognitive coupling). Search bar highlighted gold (`#ED942D`); others deep navy (`#132E57`).
 
 </details>
 
@@ -816,17 +829,19 @@ Below the header, the **main canvas** uses a 2×2 grid layout (Executive Overvie
 
 4. **CRM infrastructure gap** — 100K customers with emails on file, only 2,416 acquired via Email channel (the rest came through Search/Organic/Facebook/Display). No evidence of follow-up email campaigns to existing customer base. Largest untapped lever in the dataset. The fact that all channels show identical loyalty (1.39–1.41 orders/customer) confirms there's no CRM moat — competitors could match this with basic email marketing.
 
+5. **Cross-departmental synthesis: one email program lifts three KPIs** — a single low-cost email intervention (discount codes, bundle offers) simultaneously addresses three structural problems each surfaced independently in different sections of this analysis: (1) the **76.6% one-time buyer rate** (Q9, Customer & Marketing) — discount codes incentivize return purchases, raising repeat-customer rate; (2) the **70.2% single-item order rate** (Q6, Sales & Product) — bundle offers drive multi-item baskets, raising AOV; (3) the **systemic inventory bloat** (Q5, Sales & Product — 20 of 26 categories with stock exceeding all-time revenue) — markdown/clearance promos move old collection stock, raising inventory turnover. **One channel, three departments, near-zero marginal cost.** This is why Email re-engagement is the #1 priority recommendation despite the channel's modest $4.98 per $100 current contribution to revenue.
+
 ### Operational findings
 
-5. **Systemic inventory imbalance** — 20 of 26 categories show unsold stock cost exceeding their all-time revenue, aggregating to $8.85M unsold inventory against $7.62M cumulative revenue (116% ratio). Worst relative offenders: Socks (147%), Clothing Sets (141%), Suits (141%). Largest absolute frozen capital in Jeans ($1.14M) and Outerwear & Coats ($981K). Pattern is broad and structural, not category-specific. *(Absolute dollar amounts above are inflated by synthetic data — see Limitations. Focus on relative rankings between categories, not raw figures.)*
+6. **Systemic inventory imbalance** — 20 of 26 categories show unsold stock cost exceeding their all-time revenue, aggregating to $8.85M unsold inventory against $7.62M cumulative revenue (116% ratio). Worst relative offenders: Socks (147%), Clothing Sets (141%), Suits (141%). Largest absolute frozen capital in Jeans ($1.14M) and Outerwear & Coats ($981K). Pattern is broad and structural, not category-specific. *(Absolute dollar amounts above are inflated by synthetic data — see Limitations. Focus on relative rankings between categories, not raw figures.)*
 
-6. **Blazers & Jackets is the highest-ROI marketing target** — triple-positive intersection: highest margin in catalog (62%), best inventory health (87% inventory-to-revenue, only category where stock moves as fast as it accumulates), and lowest revenue share (2.7%). Every promotional dollar invested here returns the most contribution margin, faces no inventory bloat risk, and has the most room to grow share. Conversely, Suits cross the opposite intersection: lowest margin (39.6%), over-stocked (141%), low revenue — clean discontinuation candidate.
+7. **Blazers & Jackets is the highest-ROI marketing target** — triple-positive intersection: highest margin in catalog (62%), best inventory health (87% inventory-to-revenue, only category where stock moves as fast as it accumulates), and lowest revenue share (2.7%). Every promotional dollar invested here returns the most contribution margin, faces no inventory bloat risk, and has the most room to grow share. Conversely, Suits cross the opposite intersection: lowest margin (39.6%), over-stocked (141%), low revenue — clean discontinuation candidate.
 
-7. **Quality signal across categories** — 28.5% overall return rate at the high end of industry range (20–30%); **every single category exceeds 25%**. Suits and Suits & Sport Coats lead at 31%. Combined with 39.6% Suits margin (low), clearance pricing is plausible explanation.
+8. **Quality signal across categories** — 28.5% overall return rate at the high end of industry range (20–30%); **every single category exceeds 25%**. Suits and Suits & Sport Coats lead at 31%. Combined with 39.6% Suits margin (low), clearance pricing is plausible explanation.
 
-8. **No quality-logistics correlation** — categories distribute across the Operations Health Quadrant without a discernible "slow delivery → more returns" pattern. Returns are quality-driven (product fit, materials, expectations), not logistics-driven. Investment in faster delivery would not move return rates.
+9. **No quality-logistics correlation** — categories distribute across the Operations Health Quadrant without a discernible "slow delivery → more returns" pattern. Returns are quality-driven (product fit, materials, expectations), not logistics-driven. Investment in faster delivery would not move return rates.
 
-9. **Bundling opportunity** — 70.2% single-item orders. Cross-sell mechanics (recommended pairings, bundle discounts) underdeveloped. Cheaper to lift AOV via bundling than to acquire new customers.
+10. **Bundling opportunity** — 70.2% single-item orders. Cross-sell mechanics (recommended pairings, bundle discounts) underdeveloped. Cheaper to lift AOV via bundling than to acquire new customers.
 
 ### Prioritized recommendations
 
