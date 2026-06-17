@@ -173,34 +173,52 @@ To avoid chart hunting, the project started with a structured list of business q
 
 <br>
 
+![Sales & Product – full page (neutral state)](images/sales-product-1.png)
+
+---
+
 **4. Which categories balance margin and volume best?**
 
 - **Answer:** Blazers & Jackets have the highest margin (62%) but only 2.7% revenue share — triple-positive intersection when combined with best inventory health (87%, see Q5), making it the highest-ROI marketing target in the catalog. Jeans paradox: #2 revenue ($876K) but low margin (46.5%) — high volume masking weak profitability. Suits at 39.6% margin signal possible clearance pricing (and over-stocked at 141% inventory-to-revenue ratio — discontinuation candidate).
 - **Where in dashboard:** Category Profitability scatter (TR) on Sales & Product. X = Total Items Sold, Y = Avg Margin %, bubble size = Total Revenue. Custom tooltip surfaces Avg Margin %, Revenue Share %, Total Items, Total Revenue per category.
 
-![Sales & Product – Category Profitability tooltip on Outerwear & Coats](images/sales-product-2.png)
+![Category Profitability scatter – clean view](images/sales-product-3.png)
 
 **5. What inventory is slow-moving and how much capital is frozen?**
 
 - **Answer:** ~74% of all stock is old collection (added before 2023). 20 of 26 categories show unsold stock cost exceeding their all-time revenue — worst relative offenders: Socks (147%), Clothing Sets (141%), Suits (141%). Largest absolute frozen capital: Jeans ($1.14M), Outerwear & Coats ($981K), Sweaters ($691K). Inventory measures use `REMOVEFILTERS(dimDate)` since stock is a point-in-time snapshot, not time-series. *Note: absolute dollar values may be inflated by synthetic data generation; relative cross-category ratios are the robust analytical signal (see Limitations).*
 - **Where in dashboard:** Inventory Health TL on Sales & Product.
 
+![Inventory Health by category](images/sales-product-4.png)
+
 **6. What is the order composition — single vs multi-item?**
 
 - **Answer:** 70.2% of orders are single-item — strong bundling opportunity. Suggests cross-sell mechanics (recommended pairings, bundle discounts) underdeveloped.
 - **Where in dashboard:** Order Composition donut BL on Sales & Product.
+
+![Order Composition donut](images/sales-product-5.png)
 
 **7. Where is the price sweet spot — volume vs revenue tradeoff?**
 
 - **Answer:** $20–49 price bucket dominates volume (41.5%) but $50–99 delivers best revenue/volume balance — sweet spot for pricing strategy. **Premium tail ($200+) is only 4% of volume but contributes 17.1% of revenue** — disproportionately valuable per unit, worth protecting in promotional cycles.
 - **Where in dashboard:** Price Bucket bar chart BR on Sales & Product.
 
-![Sales & Product – natural state](images/sales-product-1.png)
+![Price Bucket distribution](images/sales-product-6.png)
 
 **8. Top 10 vs long tail — how concentrated is revenue?**
 
-- **Answer:** Top 10 products generate only ~0.94% of revenue — extreme long-tail distribution **consistent with a multi-brand wide-catalog retailer model** (e.g., online department store, fashion aggregator). Roughly 41% of catalog generates 80% of revenue (much flatter than typical 20/80 Pareto).
-- **Where in dashboard:** Inferred from Category Profitability scatter and SQL analysis — see SQL Deep Dive for the underlying query.
+- **Answer:** Top 10 products generate only **0.97%** of revenue — extreme long-tail distribution consistent with a multi-brand wide-catalog retailer model (e.g., online department store, fashion aggregator). Reaching 80% of revenue requires the top **12,585 products (~44% of the 28,709 catalog)** — much flatter than typical 20/80 Pareto.
+
+    | Product rank bucket | Product count | Revenue share |
+    |---|---|---|
+    | Top 10 | 10 | 0.97% |
+    | Top 11–100 | 90 | 3.84% |
+    | Top 101–1,000 | 900 | 16.03% |
+    | Top 1,001–5,000 | 4,000 | 31.54% |
+    | Rest (5,001+) | 23,709 | 47.63% |
+
+    Even the top 100 products combined account for under 5% of revenue. The top 1,000 reach only ~21%. This is the signature of long-tail commerce, not vertical brand economics.
+- **Where in dashboard:** No single dashboard visual answers this directly — finding is from SQL analysis (Product Pareto bucket query, see [SQL Deep Dive](#sql-deep-dive)). Indirectly visible on the Category Profitability scatter where large categories don't resolve into individual "hero products."
 
 </details>
 
