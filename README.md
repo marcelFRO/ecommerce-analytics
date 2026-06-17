@@ -241,7 +241,7 @@ To avoid chart hunting, the project started with a structured list of business q
 **10. How does customer value distribute — Pareto pattern?**
 
 - **Answer:** Top 10% of customers generate 34.3% of revenue versus industry norm 50–60%. Flat Pareto / Gini ~0.3–0.4 — revenue from breadth not whales. Strategic implication: mid-tier activation > VIP retention.
-- **Where in dashboard:** Customer Pareto bar chart TR on Customer & Marketing. Static SQL output structure (decile_table), with reactive measures pulling from `query_customer_revenue_year` (Year-filtered customer revenue at day granularity).
+- **Where in dashboard:** Customer Pareto bar chart TR on Customer & Marketing. Static SQL output structure (decile_table), with reactive measures pulling from `query_customer_revenue_year` (Year-filtered customer revenue at day granularity). Dynamic annotation displays headline finding inline: *"Top 10% = 34.0% revenue · Long-tail pattern"* — anchors the visual in the takeaway (decile 1's contribution) so reader doesn't have to compute the share manually.
 
 ![Customer Pareto – decile distribution](images/customer-marketing-4.png)
 
@@ -259,7 +259,7 @@ To avoid chart hunting, the project started with a structured list of business q
 **12. Which traffic sources deliver loyal customers vs one-time buyers?**
 
 - **Answer:** All traffic sources show identical loyalty (1.39–1.41 orders per customer) — channel choice doesn't differentiate repeat behavior. Only 2,416 customers (2.4%) were acquired via Email channel, despite all 100K customers having email addresses on file — the 97.6% reached via other channels represents untapped email re-engagement potential. For per-channel revenue contribution breakdown, see Q13.
-- **Where in dashboard:** Channel Performance bar chart BR on Customer & Marketing. Uses `Channel Revenue per $100` measure (decomposition of revenue across channels, sums to $100) — explicit anchor avoids AOV cognitive coupling. Search bar highlighted gold (`#ED942D`), others deep navy (`#132E57`).
+- **Where in dashboard:** Channel Performance bar chart BR on Customer & Marketing. Uses `Channel Revenue per $100` measure (decomposition of revenue across channels, sums to $100) — explicit anchor avoids AOV cognitive coupling. Search bar highlighted gold (`#ED942D`), others deep navy (`#132E57`). Dynamic annotation displays loyalty finding inline: *"Channel doesn't differentiate loyalty: 1.39 - 1.41 range"* — visual shows revenue differences across channels, annotation surfaces the counter-intuitive loyalty parity (different acquisition shares, identical retention).
 
 ![Channel Performance – Revenue contribution per $100](images/customer-marketing-8.png)
 
