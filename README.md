@@ -6,6 +6,19 @@
 
 ---
 
+## At a Glance
+
+| | |
+|---|---|
+| **Data scope** | 6 tables · 927K rows · 5 years (Jan 2019 – Dec 2023) · 14 countries |
+| **Pipeline** | CSV → SQL Server 2025 → Power Query → Power BI Desktop |
+| **Analytical depth** | 17 business questions · 20+ SQL queries · 30+ DAX measures |
+| **Dashboard** | 4 pages · ~16 visuals · Field Parameter toggles · custom tooltips · bookmark navigation |
+| **Methodology** | CLEAN framework · star schema · dual-source measure convention · surgical CROSSFILTER |
+| **File size** | .pbix 21.9 MB (optimized from 53 MB initial — 59% reduction) |
+
+---
+
 ## Table of Contents
 
 1. [Executive Summary](#executive-summary)
@@ -155,14 +168,14 @@ To avoid chart hunting, the project started with a structured list of business q
 
 **4. Which categories balance margin and volume best?**
 
-- **Answer:** Blazers & Jackets have the highest margin (62%) but only 2.7% revenue share — undermarketed strategic asset. Jeans paradox: #2 revenue ($876K) but low margin (46.5%) — high volume masking weak profitability. Suits at 39.6% margin signal possible clearance pricing.
+- **Answer:** Blazers & Jackets have the highest margin (62%) but only 2.7% revenue share — triple-positive intersection when combined with best inventory health (87%, see Q5), making it the highest-ROI marketing target in the catalog. Jeans paradox: #2 revenue ($876K) but low margin (46.5%) — high volume masking weak profitability. Suits at 39.6% margin signal possible clearance pricing (and over-stocked at 141% inventory-to-revenue ratio — discontinuation candidate).
 - **Where in dashboard:** Category Profitability scatter (TR) on Sales & Product. X = Total Items Sold, Y = Avg Margin %, bubble size = Total Revenue. Custom tooltip surfaces Avg Margin %, Revenue Share %, Total Items, Total Revenue per category.
 
 ![Sales & Product – Category Profitability tooltip on Outerwear & Coats](images/sales-product-2.png)
 
 **5. What inventory is slow-moving and how much capital is frozen?**
 
-- **Answer:** ~74% of all stock is old collection (added before 2023). Largest frozen capital: Jeans ($1.13M) and Outerwear & Coats ($981K). Inventory measures use `REMOVEFILTERS(dimDate)` since stock is a point-in-time snapshot, not time-series.
+- **Answer:** ~74% of all stock is old collection (added before 2023). 20 of 26 categories show unsold stock cost exceeding their all-time revenue — worst relative offenders: Socks (147%), Clothing Sets (141%), Suits (141%). Largest absolute frozen capital: Jeans ($1.14M), Outerwear & Coats ($981K), Sweaters ($691K). Inventory measures use `REMOVEFILTERS(dimDate)` since stock is a point-in-time snapshot, not time-series. *Note: absolute dollar values may be inflated by synthetic data generation; relative cross-category ratios are the robust analytical signal (see Limitations).*
 - **Where in dashboard:** Inventory Health TL on Sales & Product.
 
 **6. What is the order composition — single vs multi-item?**
@@ -798,7 +811,7 @@ Below the header, the **main canvas** uses a 2×2 grid layout (Executive Overvie
 | 2 | **Discontinue Jumpsuits, Clothing Sets, possibly Suits** | Low margin + low revenue share + high return rate (Suits 31%); frozen capital that won't recover via natural sales velocity | Medium |
 | 3 | **Bundle promotion mechanics** | 70.2% single-item orders represent immediate AOV upside; cheaper than acquisition | Medium |
 | 4 | **Marketing investment in Blazers & Jackets** | Triple-positive: highest margin (62%) + best inventory health (87% inventory-to-revenue) + low revenue share (2.7%) — highest-ROI marketing target in catalog. Every dollar invested returns maximum contribution margin with no inventory bloat risk. | Low–Medium |
-| 5 | **Old-collection markdown event** | $1.13M frozen in Jeans, $981K in Outerwear — turn capital that's locked anyway; do not protect prices on stock that hasn't moved in 12+ months | Low |
+| 5 | **Old-collection markdown event** | $1.14M frozen in Jeans, $981K in Outerwear & Coats — turn capital that's locked anyway; do not protect prices on stock that hasn't moved in 12+ months | Low |
 
 </details>
 
