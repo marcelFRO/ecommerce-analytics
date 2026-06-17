@@ -276,29 +276,35 @@ To avoid chart hunting, the project started with a structured list of business q
 
 <br>
 
+![Operations – full page (natural state)](images/operations-1.png)
+
+---
+
 **14. What is the average delivery time and SLA performance?**
 
 - **Answer:** Avg delivery time 3.9 days, with 41.7% of orders delivered within 3-day SLA — majority falls just beyond threshold. Same Day delivery 1.3%, Next Day 7.4% — express fulfillment is a small but measurable segment. Note: 17% of order_items have data quality issues with delivery dates; analysis uses orders table directly (cleaner) with surgical CROSSFILTER for Year reactivity.
 - **Where in dashboard:** Logistics Speed histogram TL on Operations. Dynamic annotation displays Same Day / Next Day percentages in Polish locale formatting.
 
-![Operations – natural state](images/operations-1.png)
+![Logistics Speed histogram – delivery day distribution](images/operations-4.png)
 
 **15. What is the return rate by category and gender? Quality outliers?**
 
 - **Answer:** Return rate 28.5% overall — at the high end of industry range (20–30%); every single category exceeds 25% benchmark. Suits and Suits & Sport Coats lead returns at 31% with low revenue — candidates for discontinuation. Gender breakdown: F 15.5%, M 15.3% — no meaningful difference. Return Rate uses censored data principle: denominator = Complete + Returned only (delivered orders that had time to be returned).
-- **Where in dashboard:** Quality Signal bar chart TR + Operations Health Quadrant BR (scatter).
+- **Where in dashboard:** Quality Signal bar chart TR + Operations Health Quadrant BR (scatter). Both visuals expose category-level return rate — Quality Signal as raw bar ranking, Quadrant as bubble plot combining delivery time × return rate × revenue share.
 
-![Operations – Jeans selected on Quadrant, all visuals filter](images/operations-2.png)
+![Quality Signal – return rate by category](images/operations-5.png)
+
+![Operations Health Quadrant – delivery time × return rate × revenue](images/operations-6.png)
 
 **16. Does delivery time correlate with return rate?**
 
-- **Answer:** No clear correlation. Categories distribute across the quadrant without a discernible delivery-time → return-rate gradient. Returns are quality-driven (product/category-specific), not logistics-driven.
-- **Where in dashboard:** Operations Health Quadrant BR. X = avg delivery time, Y = return rate, bubble size = revenue share. Top-right quadrant = high-risk categories. Lack of trend line confirms independence.
+- **Answer:** No clear correlation. Categories distribute across the quadrant without a discernible delivery-time → return-rate gradient. Returns are quality-driven (product/category-specific), not logistics-driven. See Operations Health Quadrant above (Q15) — visual confirms lack of trend.
+- **Where in dashboard:** Operations Health Quadrant BR (shown under Q15). X = avg delivery time, Y = return rate, bubble size = revenue share. Top-right quadrant = high-risk categories. Lack of trend line confirms independence.
 
 **17. How is inventory turning over by category?**
 
 - **Answer:** Industry-standard formula: COGS proxy (sold order_items count) / Avg Inventory (unsold stock snapshot). Numerator reactive to Year filter, denominator constant via `REMOVEFILTERS(dimDate)`. Year-level turnover progression: 2019 (0.01x) → 2023 (0.21x) = 0.41x cumulative. Growth narrative visible in turnover acceleration.
-- **Where in dashboard:** Inventory Turnover KPI on Operations + reactive to Quadrant BR category clicks.
+- **Where in dashboard:** Inventory Turnover KPI on Operations + reactive to Quadrant BR category clicks (shown under Q15).
 
 </details>
 
