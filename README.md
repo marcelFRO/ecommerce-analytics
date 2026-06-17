@@ -63,9 +63,9 @@ The dataset (originally **theLook eCommerce**, a fictional clothing retailer dat
 
 ### Anti-tutorial framing
 
-A common portfolio failure mode is **chart hunting** — opening the data and looking for "something interesting" to plot. This project deliberately avoided that pattern.
+Two common portfolio failure modes work against analytical clarity: **chart hunting** — opening the data and looking for "something interesting" to plot, with no business question to anchor the work — and **analysis paralysis** — overthinking the project scope until forward momentum stops, typically driven by perfectionism, information overload, or fear of choosing the wrong angle. This project deliberately avoided both.
 
-Instead, the project started with **18 executive-driven business questions** across 4 departments (see [Business Questions by Department](#business-questions-by-department)). Every visual in the dashboard answers a specific question. Every measure has a documented purpose. Every architectural decision has a written rationale.
+Instead, the project started with **18 executive-driven business questions** across 4 departments (see [Business Questions by Department](#business-questions-by-department)). Every visual in the dashboard answers a specific question. Every measure has a documented purpose. Every architectural decision has a written rationale. The bounded question set is itself the antidote to both pitfalls: chart hunting is impossible when every visual must answer a defined question, and analysis paralysis is avoided because scope is finite by design.
 
 This is the difference between a dashboard built **for stakeholders** versus a dashboard built **about data**.
 
