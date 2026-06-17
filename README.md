@@ -283,7 +283,7 @@ To avoid chart hunting, the project started with a structured list of business q
 **14. What is the average delivery time and SLA performance?**
 
 - **Answer:** Avg delivery time 3.9 days, with 41.7% of orders delivered within 3-day SLA — majority falls just beyond threshold. Same Day delivery 1.3%, Next Day 7.4% — express fulfillment is a small but measurable segment. Note: 17% of order_items have data quality issues with delivery dates; analysis uses orders table directly (cleaner) with surgical CROSSFILTER for Year reactivity.
-- **Where in dashboard:** Logistics Speed histogram TL on Operations. Dynamic annotation displays Same Day / Next Day percentages in Polish locale formatting.
+- **Where in dashboard:** Logistics Speed histogram TL on Operations. Dynamic annotation displays headline finding inline: *"Same Day: 1,3% | Next Day: 7,4%"* — uses Polish locale formatting via DAX `FORMAT(..., "pl-PL")` (comma as decimal separator). Surfaces the small-but-measurable express fulfillment segment that bars alone would understate.
 
 ![Logistics Speed histogram – delivery day distribution](images/operations-4.png)
 
