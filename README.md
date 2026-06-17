@@ -73,7 +73,7 @@ This is the difference between a dashboard built **for stakeholders** versus a d
 
 Data exploration followed the **CLEAN framework** — a structured approach to analytics work:
 
-- **C — Conceptualize the data:** initial exploration in Excel before any SQL load. Row counts, value ranges, key column distributions, null patterns, anomaly detection. This surfaced the comma-in-name CSV parsing bugs (26 rows in products, 400 in inventory_items) and the España encoding duplicate, which were then resolved at file level *before* BULK INSERT — saving downstream cleanup time.
+- **C — Conceptualize the data:** initial exploration in Excel before any SQL load — row counts, value ranges, key column distributions, null patterns, anomaly detection. This phase surfaced three categories of issues: (1) **comma-in-name CSV parsing bugs** (26 rows in products, 400 in inventory_items) — fixed in Excel at file level before BULK INSERT; (2) **date inversion artifacts** in order_items (~17% rows with `shipped_at` preceding `created_at`, plus 4,663 rows with `delivered_at` preceding `created_at`) — flagged for exclusion from time-based analysis; (3) **España encoding duplicate** — normalized later during Power Query ETL step. Catching these upstream saved significant downstream cleanup time.
 - **L — Locate solvable problems:** documented data quality issues with explicit decisions (fix vs work around vs exclude). Examples: comma-in-name → manually fixed; shipped_at < created_at timezone artifact (17%) → excluded from time-based analysis but kept in volume aggregates; status filter convention to handle stale Shipped/Processing orders.
 - **E — Engage with the question, not the data:** every visual answers a pre-defined business question (the 18 questions below). No "let me see what this column looks like" charts.
 - **A — Analyze with methodology transparency:** every measure has a documented purpose; conscious decisions (dual-source convention, surgical CROSSFILTER, REMOVEFILTERS on inventory) are explained, not buried.
@@ -105,12 +105,12 @@ To avoid chart hunting, the project started with a structured list of business q
 | 1 | Executive | What is the revenue trend across years? Sales anomalies, seasonality? |
 | 2 | Executive | Which countries drive revenue and how is growth distributed geographically? |
 | 3 | Executive | Which categories drive total revenue mix? |
-| 4 | Executive | What is the customer repeat purchase rate trend? |
-| 5 | Sales & Product | Which categories balance margin and volume best? |
-| 6 | Sales & Product | What inventory is slow-moving and how much capital is frozen? |
-| 7 | Sales & Product | What is the order composition — single vs multi-item? |
-| 8 | Sales & Product | Where is the price sweet spot — volume vs revenue tradeoff? |
-| 9 | Sales & Product | Top 10 vs long tail — how concentrated is revenue? |
+| 4 | Sales & Product | Which categories balance margin and volume best? |
+| 5 | Sales & Product | What inventory is slow-moving and how much capital is frozen? |
+| 6 | Sales & Product | What is the order composition — single vs multi-item? |
+| 7 | Sales & Product | Where is the price sweet spot — volume vs revenue tradeoff? |
+| 8 | Sales & Product | Top 10 vs long tail — how concentrated is revenue? |
+| 9 | Customer & Marketing | What is the customer repeat purchase rate trend? |
 | 10 | Customer & Marketing | How does customer value distribute — Pareto pattern? |
 | 11 | Customer & Marketing | What is the demographic structure — age, country, gender, traffic source? |
 | 12 | Customer & Marketing | Which traffic sources deliver loyal customers vs one-time buyers? |
@@ -147,11 +147,6 @@ To avoid chart hunting, the project started with a structured list of business q
 - **Answer:** Outerwear & Coats leads at $904K (12.2% share), followed by Jeans at $876K (11.7%). Treemap with conditional formatting highlights top 3 categories in deep navy to anchor reader attention.
 - **Where in dashboard:** Revenue Drivers treemap on Executive Overview. Top 3 categories colored deep navy, others light navy — color convention matches the map's "dark = high revenue" semantic.
 
-**4. What is the customer repeat purchase rate trend?**
-
-- **Answer:** 76.6% of customers buy only once. Repeat purchase rate (cohort-based: customers with at least one order in any prior year) grew organically from 0% in 2019 to 20.3% by 2023 — broad-based customer acquisition with improving retention over time.
-- **Where in dashboard:** Customer Retention static SQL visual on Customer & Marketing (BL). Year-over-year trend, not reactive to peer-visual cross-filtering by design (multi-year narrative preserved).
-
 </details>
 
 <details>
@@ -159,31 +154,31 @@ To avoid chart hunting, the project started with a structured list of business q
 
 <br>
 
-**5. Which categories balance margin and volume best?**
+**4. Which categories balance margin and volume best?**
 
 - **Answer:** Blazers & Jackets have the highest margin (62%) but only 2.7% revenue share — undermarketed strategic asset. Jeans paradox: #2 revenue ($876K) but low margin (46.5%) — high volume masking weak profitability. Suits at 39.6% margin signal possible clearance pricing.
 - **Where in dashboard:** Category Profitability scatter (TR) on Sales & Product. X = Total Items Sold, Y = Avg Margin %, bubble size = Total Revenue. Custom tooltip surfaces Avg Margin %, Revenue Share %, Total Items, Total Revenue per category.
 
 ![Sales & Product – Category Profitability tooltip on Outerwear & Coats](images/sales-product-2.png)
 
-**6. What inventory is slow-moving and how much capital is frozen?**
+**5. What inventory is slow-moving and how much capital is frozen?**
 
 - **Answer:** ~74% of all stock is old collection (added before 2023). Largest frozen capital: Jeans ($1.13M) and Outerwear & Coats ($981K). Inventory measures use `REMOVEFILTERS(dimDate)` since stock is a point-in-time snapshot, not time-series.
 - **Where in dashboard:** Inventory Health TL on Sales & Product.
 
-**7. What is the order composition — single vs multi-item?**
+**6. What is the order composition — single vs multi-item?**
 
 - **Answer:** 70.2% of orders are single-item — strong bundling opportunity. Suggests cross-sell mechanics (recommended pairings, bundle discounts) underdeveloped.
 - **Where in dashboard:** Order Composition donut BL on Sales & Product.
 
-**8. Where is the price sweet spot — volume vs revenue tradeoff?**
+**7. Where is the price sweet spot — volume vs revenue tradeoff?**
 
 - **Answer:** $20–49 price bucket dominates volume (41.5%) but $50–99 delivers best revenue/volume balance — sweet spot for pricing strategy. **Premium tail ($200+) is only 4% of volume but contributes 17.1% of revenue** — disproportionately valuable per unit, worth protecting in promotional cycles.
 - **Where in dashboard:** Price Bucket bar chart BR on Sales & Product.
 
 ![Sales & Product – natural state](images/sales-product-1.png)
 
-**9. Top 10 vs long tail — how concentrated is revenue?**
+**8. Top 10 vs long tail — how concentrated is revenue?**
 
 - **Answer:** Top 10 products generate only ~0.94% of revenue — extreme long-tail distribution **consistent with a multi-brand wide-catalog retailer model** (e.g., online department store, fashion aggregator). Roughly 41% of catalog generates 80% of revenue (much flatter than typical 20/80 Pareto).
 - **Where in dashboard:** Inferred from Category Profitability scatter and SQL analysis — see SQL Deep Dive for the underlying query.
@@ -194,6 +189,11 @@ To avoid chart hunting, the project started with a structured list of business q
 <summary><strong>Customer & Marketing</strong></summary>
 
 <br>
+
+**9. What is the customer repeat purchase rate trend?**
+
+- **Answer:** 76.6% of customers buy only once. Repeat purchase rate (cohort-based: customers with at least one order in any prior year) grew organically from 0% in 2019 to 20.3% by 2023 — broad-based customer acquisition with improving retention over time.
+- **Where in dashboard:** Customer Retention static SQL visual on Customer & Marketing (BL). Year-over-year trend, not reactive to peer-visual cross-filtering by design (multi-year narrative preserved).
 
 **10. How does customer value distribute — Pareto pattern?**
 
