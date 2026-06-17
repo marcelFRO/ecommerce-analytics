@@ -140,24 +140,31 @@ To avoid chart hunting, the project started with a structured list of business q
 
 <br>
 
+![Executive Overview – full page (Quarterly granularity)](images/executive-overview-3.png)
+
+---
+
 **1. What is the revenue trend across years? Sales anomalies, seasonality?**
 
 - **Answer:** Revenue scaled from $121K (2019) to $2.8M (2023), with a 238% acceleration in 2020 (COVID boom) sustained through 2023 with no year-over-year decline. Growth is volume-driven — average item price held stable at $59–60 every year.
+- **Seasonality:** No strong year-to-year seasonality is apparent in this dataset — the growth trajectory dominates within-year patterns, making clean seasonality detection difficult without normalizing each month against its year's average (seasonal indexing). Two patterns survive this caveat: (1) from 2021 onwards (after the business stabilized past initial ramp-up), February revenue dips 5–17% from January every year — likely reflecting post-holiday spending fatigue and a completed winter wardrobe cycle, with momentum recovering in March; (2) December peaks above November in every year of the dataset (5/5), averaging ~19% above the prior month — consistent with Christmas-driven retail seasonality on top of the broader growth trajectory.
 - **Where in dashboard:** Hero combo chart on Executive Overview (Monthly / Quarterly Field Parameter toggle). Bars = revenue, line = orders. Parallel trajectories confirm volume-driven growth.
 
-![Executive Overview – Monthly trajectory](images/executive-overview-1.png)
+![Hero combo chart – Monthly trajectory](images/executive-overview-4.png)
 
 **2. Which countries drive revenue and how is growth distributed geographically?**
 
 - **Answer:** China dominates at 34.6% of total revenue, followed by USA (22.6%) and Brazil (14.1%) — top 3 countries together cover ~71% of revenue. No country recorded a decline across the full 2019–2023 period — growth is geographically broad-based.
-- **Where in dashboard:** Filled choropleth map on Executive Overview, with Region tile slicer (Americas · Asia-Pacific · Europe) for regional drill-down. Dark fill = high revenue.
+- **Where in dashboard:** Filled choropleth map on Executive Overview, with Region tile slicer (Americas · Asia-Pacific · Europe) for regional drill-down. Dark fill = high revenue. Hover tooltip shows Total Revenue, Total Customers, and Total Orders per country.
 
-![Executive Overview – Europe regional view, quarterly granularity](images/executive-overview-2.png)
+![Country Revenue – World view](images/executive-overview-5.png)
 
 **3. Which categories drive total revenue mix?**
 
 - **Answer:** Outerwear & Coats leads at $904K (12.2% share), followed by Jeans at $876K (11.7%). Treemap with conditional formatting highlights top 3 categories in deep navy to anchor reader attention.
-- **Where in dashboard:** Revenue Drivers treemap on Executive Overview. Top 3 categories colored deep navy, others light navy — color convention matches the map's "dark = high revenue" semantic.
+- **Where in dashboard:** Revenue Drivers treemap on Executive Overview. Top 3 categories colored deep navy, others light navy — color convention matches the map's "dark = high revenue" semantic. Hover tooltip shows Total Revenue, Total Items, Revenue Share %, and Avg Margin % per category.
+
+![Revenue Drivers treemap](images/executive-overview-6.png)
 
 </details>
 
