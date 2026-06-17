@@ -832,7 +832,7 @@ Below the header, the **main canvas** uses a 2×2 grid layout (Executive Overvie
 
 | # | Recommendation | Rationale | Effort |
 |---|---|---|---|
-| 1 | **Email re-engagement campaign with discount codes targeting one-time buyers** | Activates the unused 97.6% of email-eligible customers; clears old stock + builds repeat behavior; lowest cost intervention with largest data-supported upside | Low |
+| 1 | **Email re-engagement campaign with discount codes + bundle offers** | Activates the unused 97.6% of email-eligible customers; lifts three KPIs concurrently (repeat behavior, AOV via bundling, inventory turnover via markdowns) — see [Strategic Finding #5](#key-insights--recommendations). Lowest-cost intervention with broadest data-supported upside. | Low |
 | 2 | **Discontinue Jumpsuits, Clothing Sets, possibly Suits** | Low margin + low revenue share + high return rate (Suits 31%); frozen capital that won't recover via natural sales velocity | Medium |
 | 3 | **Bundle promotion mechanics** | 70.2% single-item orders represent immediate AOV upside; cheaper than acquisition | Medium |
 | 4 | **Marketing investment in Blazers & Jackets** | Triple-positive: highest margin (62%) + best inventory health (87% inventory-to-revenue) + low revenue share (2.7%) — highest-ROI marketing target in catalog. Every dollar invested returns maximum contribution margin with no inventory bloat risk. | Low–Medium |
