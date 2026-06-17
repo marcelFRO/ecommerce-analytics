@@ -65,7 +65,7 @@ The dataset (originally **theLook eCommerce**, a fictional clothing retailer dat
 
 Two common portfolio failure modes work against analytical clarity: **chart hunting** — opening the data and looking for "something interesting" to plot, with no business question to anchor the work — and **analysis paralysis** — overthinking the project scope until forward momentum stops, typically driven by perfectionism, information overload, or fear of choosing the wrong angle. This project deliberately avoided both.
 
-Instead, the project started with **18 executive-driven business questions** across 4 departments (see [Business Questions by Department](#business-questions-by-department)). Every visual in the dashboard answers a specific question. Every measure has a documented purpose. Every architectural decision has a written rationale. The bounded question set is itself the antidote to both pitfalls: chart hunting is impossible when every visual must answer a defined question, and analysis paralysis is avoided because scope is finite by design.
+Instead, the project started with **17 executive-driven business questions** across 4 departments (see [Business Questions by Department](#business-questions-by-department)). Every visual in the dashboard answers a specific question. Every measure has a documented purpose. Every architectural decision has a written rationale. The bounded question set is itself the antidote to both pitfalls: chart hunting is impossible when every visual must answer a defined question, and analysis paralysis is avoided because scope is finite by design.
 
 This is the difference between a dashboard built **for stakeholders** versus a dashboard built **about data**.
 
@@ -115,11 +115,10 @@ To avoid chart hunting, the project started with a structured list of business q
 | 11 | Customer & Marketing | What is the demographic structure — age, country, gender, traffic source? |
 | 12 | Customer & Marketing | Which traffic sources deliver loyal customers vs one-time buyers? |
 | 13 | Customer & Marketing | Does traffic source affect return rate? |
-| 14 | Customer & Marketing | How is the new vs returning customer mix trending? |
-| 15 | Operations | What is the average delivery time and SLA performance? |
-| 16 | Operations | What is the return rate by category and gender? Quality outliers? |
-| 17 | Operations | Does delivery time correlate with return rate? |
-| 18 | Operations | How is inventory turning over by category? |
+| 14 | Operations | What is the average delivery time and SLA performance? |
+| 15 | Operations | What is the return rate by category and gender? Quality outliers? |
+| 16 | Operations | Does delivery time correlate with return rate? |
+| 17 | Operations | How is inventory turning over by category? |
 
 ### Department deep dives
 
@@ -192,7 +191,7 @@ To avoid chart hunting, the project started with a structured list of business q
 
 **9. What is the customer repeat purchase rate trend?**
 
-- **Answer:** 76.6% of customers buy only once. Repeat purchase rate (cohort-based: customers with at least one order in any prior year) grew organically from 0% in 2019 to 20.3% by 2023 — broad-based customer acquisition with improving retention over time.
+- **Answer:** 76.6% of customers buy only once at lifetime level. However, repeat purchase rate (cohort-based: customers with at least one order in any prior year) grew organically from 0% in 2019 (structural baseline — no prior years) to 20.3% by 2023 — year-over-year improvement in organic retention achieved without explicit campaign intervention. Broad-based customer acquisition with improving retention over time.
 - **Where in dashboard:** Customer Retention static SQL visual on Customer & Marketing (BL). Year-over-year trend, not reactive to peer-visual cross-filtering by design (multi-year narrative preserved).
 
 **10. How does customer value distribute — Pareto pattern?**
@@ -219,11 +218,6 @@ To avoid chart hunting, the project started with a structured list of business q
 - **Answer:** No meaningful difference — all channels cluster at 14.7–15.6% return rate (within ±1 percentage point). Confirms that channel quality is not a return-rate driver; product/category quality is the dominant factor.
 - **Where in dashboard:** Cross-referenced via Operations Quality Signal (TR) under traffic source filter context. SQL analysis surfaced the finding; visual confirmation through cross-filtering Channel Performance + Quality Signal.
 
-**14. How is the new vs returning customer mix trending?**
-
-- **Answer:** Returning customer cohort rate grew from 0% in 2019 (structural baseline — no prior years) to 20.3% by 2023. Year-over-year improvement in organic retention without explicit campaign intervention.
-- **Where in dashboard:** Customer Retention stacked bar BL on Customer & Marketing. Static SQL output (`query_customers`), isolated from peer-visual cross-filtering — preserves multi-year narrative integrity.
-
 </details>
 
 <details>
@@ -231,26 +225,26 @@ To avoid chart hunting, the project started with a structured list of business q
 
 <br>
 
-**15. What is the average delivery time and SLA performance?**
+**14. What is the average delivery time and SLA performance?**
 
 - **Answer:** Avg delivery time 3.9 days, with 41.7% of orders delivered within 3-day SLA — majority falls just beyond threshold. Same Day delivery 1.3%, Next Day 7.4% — express fulfillment is a small but measurable segment. Note: 17% of order_items have data quality issues with delivery dates; analysis uses orders table directly (cleaner) with surgical CROSSFILTER for Year reactivity.
 - **Where in dashboard:** Logistics Speed histogram TL on Operations. Dynamic annotation displays Same Day / Next Day percentages in Polish locale formatting.
 
 ![Operations – natural state](images/operations-1.png)
 
-**16. What is the return rate by category and gender? Quality outliers?**
+**15. What is the return rate by category and gender? Quality outliers?**
 
 - **Answer:** Return rate 28.5% overall — at the high end of industry range (20–30%); every single category exceeds 25% benchmark. Suits and Suits & Sport Coats lead returns at 31% with low revenue — candidates for discontinuation. Gender breakdown: F 15.5%, M 15.3% — no meaningful difference. Return Rate uses censored data principle: denominator = Complete + Returned only (delivered orders that had time to be returned).
 - **Where in dashboard:** Quality Signal bar chart TR + Operations Health Quadrant BR (scatter).
 
 ![Operations – Jeans selected on Quadrant, all visuals filter](images/operations-2.png)
 
-**17. Does delivery time correlate with return rate?**
+**16. Does delivery time correlate with return rate?**
 
 - **Answer:** No clear correlation. Categories distribute across the quadrant without a discernible delivery-time → return-rate gradient. Returns are quality-driven (product/category-specific), not logistics-driven.
 - **Where in dashboard:** Operations Health Quadrant BR. X = avg delivery time, Y = return rate, bubble size = revenue share. Top-right quadrant = high-risk categories. Lack of trend line confirms independence.
 
-**18. How is inventory turning over by category?**
+**17. How is inventory turning over by category?**
 
 - **Answer:** Industry-standard formula: COGS proxy (sold order_items count) / Avg Inventory (unsold stock snapshot). Numerator reactive to Year filter, denominator constant via `REMOVEFILTERS(dimDate)`. Year-level turnover progression: 2019 (0.01x) → 2023 (0.21x) = 0.41x cumulative. Growth narrative visible in turnover acceleration.
 - **Where in dashboard:** Inventory Turnover KPI on Operations + reactive to Quadrant BR category clicks.
