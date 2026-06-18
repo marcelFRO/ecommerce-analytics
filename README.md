@@ -624,7 +624,7 @@ erDiagram
 
 **Snowflake element justification:** `distribution_centers` (10 rows) connects to `products` via `distribution_center_id`, not directly to the fact table. This is intentional — a distribution center describes a **product's warehouse origin**, not a sale event. Attaching it to `products` keeps the relationship semantically clean and avoids redundant joins.
 
-**`dimDate` is custom-built via DAX** (`CALENDAR(DATE(2019,1,1), DATE(2023,12,31))`) with calculated columns for Year, Month, Quarter, Year-Month, Year-Quarter, Day Name, Year-Month Date (first day of month for continuous time-axis charts), and sort-order helpers.
+**`dimDate` is custom-built via DAX** (`CALENDAR(DATE(2019,1,1), DATE(2023,12,31))`) with 14 calculated columns covering temporal granularities (Year, Month, Quarter, Day of Week), display labels (Month Name, Month Short, Day Name, Year-Month, Year-Quarter, Quarter Date), time-axis support (Year-Month Date — first day of month for continuous time-axis charts), sort-order helpers (Year-Month Sort, Quarter Date Sort), and flags (Is Weekend).
 
 **`order_items` joins to `dimDate` via a `Date Only` column** added in Power Query (`Date.From([created_at_dt])`) to resolve a `DATETIMEOFFSET` vs `Date` type mismatch — relationships require matching data types on both sides.
 
@@ -694,6 +694,19 @@ CALCULATE(
 ```
 
 The CROSSFILTER directive opens the `order_items ↔ orders` relationship bidirectionally **only for this measure**, allowing the Year filter (which sits on `order_items` via `dimDate`) to propagate to `orders`.
+
+The `Delivery Days` column itself is a DAX calculated column in `orders`:
+
+```dax
+Delivery Days = 
+IF(
+    NOT ISBLANK( orders[delivered_at_dt] ),
+    DATEDIFF( orders[created_at_dt], orders[delivered_at_dt], DAY ),
+    BLANK()
+)
+```
+
+Defensive `IF NOT ISBLANK` check returns `BLANK()` for orders still in Shipped/Processing state (not yet delivered) — `AVERAGE` then correctly excludes these from delivery time calculation rather than treating null as 0.
 
 **Why surgical, not global:** changing relationship cross-filter direction globally (in Model view) would break other measures by introducing ambiguity. Specifically, it broke `AOV per traffic_source` on C&M when tested. Surgical per-measure CROSSFILTER is the **good citizen** pattern — opens bidirectional only where needed, leaves the model relationships clean elsewhere.
 
@@ -936,7 +949,7 @@ Below the header, the **main canvas** uses a 2×2 grid layout (Executive Overvie
 
 **Role:** Product economics. Which categories drive revenue vs margin, inventory health, order composition, price tier performance.
 
-**KPI panel:** 4 product-focused KPIs (Avg Order Value · Total Items Sold · Avg Margin % · Slow Stock Value or equivalent)
+**KPI panel:** Total Revenue · Avg Margin % · Total Orders · Avg Order Value
 
 **Main visuals (2×2 grid):**
 
@@ -959,7 +972,7 @@ Below the header, the **main canvas** uses a 2×2 grid layout (Executive Overvie
 
 **Role:** Customer base structure. Demographics, value distribution, acquisition vs retention trends, channel performance.
 
-**KPI panel:** 4 customer-focused KPIs (Total Customers · Repeat Purchase Rate · Email Coverage % · AOV or equivalent)
+**KPI panel:** Total Customers · Orders Per Client · Avg Item Price · Repeat Purchase %
 
 **Main visuals (2×2 grid):**
 
@@ -1024,7 +1037,7 @@ Below the header, the **main canvas** uses a 2×2 grid layout (Executive Overvie
 
 ### Operational findings
 
-6. **Systemic inventory imbalance** — 20 of 26 categories show unsold stock cost exceeding their all-time revenue, aggregating to $8.85M unsold inventory against $7.62M cumulative revenue (116% ratio). Worst relative offenders: Socks (147%), Clothing Sets (141%), Suits (141%). Largest absolute frozen capital in Jeans ($1.14M) and Outerwear & Coats ($981K). Pattern is broad and structural, not category-specific. *(Absolute dollar amounts above are inflated by synthetic data — see Limitations. Focus on relative rankings between categories, not raw figures.)*
+6. **Systemic inventory imbalance** — 20 of 26 categories show unsold stock cost exceeding their all-time revenue, aggregating to $8.85M unsold inventory against $7.5M cumulative revenue (118% ratio). Worst relative offenders: Socks (147%), Clothing Sets (141%), Suits (141%). Largest absolute frozen capital in Jeans ($1.14M) and Outerwear & Coats ($981K). Pattern is broad and structural, not category-specific. *(Absolute dollar amounts above are inflated by synthetic data — see Limitations. Focus on relative rankings between categories, not raw figures.)*
 
 7. **Blazers & Jackets is the highest-ROI marketing target** — triple-positive intersection: highest margin in catalog (62%), best inventory health (87% inventory-to-revenue, only category where stock moves as fast as it accumulates), and lowest revenue share (2.7%). Every promotional dollar invested here returns the most contribution margin, faces no inventory bloat risk, and has the most room to grow share. Conversely, Suits cross the opposite intersection: lowest margin (39.6%), over-stocked (141%), low revenue — clean discontinuation candidate.
 
