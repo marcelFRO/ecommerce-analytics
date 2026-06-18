@@ -86,8 +86,8 @@ This is the difference between a dashboard built **for stakeholders** versus a d
 
 Data exploration followed the **CLEAN framework** — a structured approach to analytics work:
 
-- **C — Conceptualize the data:** initial exploration in Excel before any SQL load — row counts, value ranges, key column distributions, null patterns, anomaly detection. This phase surfaced three categories of issues: (1) **comma-in-name CSV parsing bugs** (26 rows in products, 400 in inventory_items) — fixed in Excel at file level before BULK INSERT; (2) **date inversion artifacts** in order_items (~17% rows with `shipped_at` preceding `created_at`, plus 4,663 rows with `delivered_at` preceding `created_at`) — flagged for exclusion from time-based analysis; (3) **España encoding duplicate** — normalized later during Power Query ETL step. Catching these upstream saved significant downstream cleanup time.
-- **L — Locate solvable problems:** documented data quality issues with explicit decisions (fix vs work around vs exclude). Examples: comma-in-name → manually fixed; shipped_at < created_at timezone artifact (17%) → excluded from time-based analysis but kept in volume aggregates; status filter convention to handle stale Shipped/Processing orders.
+- **C — Conceptualize the data:** initial exploration in Excel before any SQL load — row counts, value ranges, key column distributions, null patterns, anomaly detection. This phase surfaced three categories of issues: (1) **comma-in-name CSV parsing bugs** (26 rows in products, 400 in inventory_items) — fixed in Excel at file level before BULK INSERT; (2) **date inversion artifacts** in order_items (~17% rows with `shipped_at` preceding `created_at`, plus 4,663 rows with `delivered_at` preceding `created_at`) — flagged for time-based analysis migration; (3) **encoding duplicates** (España/Spain, Deutschland/Germany — same country represented under localized vs English names) — normalized later during Power Query ETL step. Catching these upstream saved significant downstream cleanup time.
+- **L — Locate solvable problems:** documented data quality issues with explicit decisions (fix vs work around vs exclude). Examples: comma-in-name → manually fixed at file level in Excel; date inversion artifacts in order_items (~17% rows with `shipped_at` < `created_at`, 4,663 rows with `delivered_at` < `created_at`) → time-based delivery analysis migrated to the orders table (timestamps clean there) while volume aggregates from order_items remained valid (financial value still legitimate, just timestamp columns unreliable); status filter convention to handle stale Shipped/Processing orders.
 - **E — Engage with the question, not the data:** every visual answers a pre-defined business question (the 17 questions below). No "let me see what this column looks like" charts.
 - **A — Analyze with methodology transparency:** every measure has a documented purpose; conscious decisions (dual-source convention, surgical CROSSFILTER, REMOVEFILTERS on inventory) are explained, not buried.
 - **N — Narrate findings:** README as executive summary; info textboxes on each dashboard page; recommendations attached to findings, not just observations.
@@ -282,7 +282,7 @@ To avoid chart hunting, the project started with a structured list of business q
 
 **14. What is the average delivery time and SLA performance?**
 
-- **Answer:** Avg delivery time 3.9 days, with 41.7% of orders delivered within 3-day SLA — majority falls just beyond threshold. Same Day delivery 1.3%, Next Day 7.4% — express fulfillment is a small but measurable segment. Note: 17% of order_items have data quality issues with delivery dates; analysis uses orders table directly (cleaner) with surgical CROSSFILTER for Year reactivity.
+- **Answer:** Avg delivery time 3.9 days, with 41.7% of orders delivered within 3-day **Service Level Agreement (SLA)** target — majority falls just beyond threshold. Same Day delivery 1.3%, Next Day 7.4% — express fulfillment is a small but measurable segment. Note: 17% of order_items have data quality issues with delivery dates; analysis uses orders table directly (cleaner) with surgical CROSSFILTER for Year reactivity.
 - **Where in dashboard:** Logistics Speed histogram TL on Operations. Dynamic annotation displays headline finding inline: *"Same Day: 1,3% | Next Day: 7,4%"* — uses Polish locale formatting via DAX `FORMAT(..., "pl-PL")` (comma as decimal separator). Surfaces the small-but-measurable express fulfillment segment that bars alone would understate.
 
 ![Logistics Speed histogram – delivery day distribution](images/operations-4.png)
@@ -290,7 +290,7 @@ To avoid chart hunting, the project started with a structured list of business q
 **15. What is the return rate by category and gender? Quality outliers?**
 
 - **Answer:** Return rate 28.5% overall — at the high end of industry range (20–30%); every single category exceeds 25% benchmark. Suits and Suits & Sport Coats lead returns at 31% with low revenue — candidates for discontinuation. Gender breakdown: F 15.5%, M 15.3% — no meaningful difference. Return Rate uses censored data principle: denominator = Complete + Returned only (delivered orders that had time to be returned).
-- **Where in dashboard:** Quality Signal bar chart TR + Operations Health Quadrant BR (scatter). Both visuals expose category-level return rate — Quality Signal as raw bar ranking, Quadrant as bubble plot combining delivery time × return rate × revenue share.
+- **Where in dashboard:** Quality Signal bar chart TR + Operations Health Quadrant BR (scatter). Both visuals expose category-level return rate — Quality Signal as raw bar ranking, Quadrant as bubble plot combining delivery time × return rate × revenue share. Quality Signal includes **TOP 15 / ALL toggle** — two separate buttons programmed via bookmarks that swap visual focus between the 15 worst-return-rate categories (focused decision view) and all 26 categories (full distribution view).
 
 ![Quality Signal – return rate by category](images/operations-5.png)
 
@@ -323,12 +323,13 @@ flowchart LR
 
 | Layer | Tool | Purpose |
 |---|---|---|
+| Pre-import exploration | Microsoft Excel | Initial data profiling, file-level CSV cleanup (comma-in-name fixes in products and inventory_items), date anomaly detection during CLEAN Conceptualize phase |
 | Storage | SQL Server 2025 Developer Edition (local instance) | Source of truth, transactional model |
 | Querying | SSMS (SQL Server Management Studio) | Schema design, BULK INSERT, analytical SQL |
-| ETL | Power Query M (in Power BI Desktop) | Date column conversion, calculated columns (Region, Date Only) |
+| ETL | Power Query M (in Power BI Desktop) | Date column conversion, encoding normalization (España/Deutschland), calculated columns (Region, Date Only) |
 | Modeling | Power BI Desktop, DAX | Star schema (1 snowflake element), 30+ measures |
 | Visualization | Power BI Desktop | 4-page interactive dashboard with bookmarks, Field Parameters, custom tooltips |
-| External tooling | Tabular Editor 2 (free) | Measure dependency analysis, model inspection |
+| External tooling | Tabular Editor 2 (free) + DAX Studio (free) | Measure dependency analysis, model inspection, VertiPaq column size analysis during final .pbix optimization (drove 53 MB → 21.9 MB size reduction) |
 
 **Connection mode: Import** (not DirectQuery) — chosen to support Power Query transformations and static SQL query results as separate tables (e.g., `decile_table`, `query_customers`, `query_customer_revenue_year`).
 
@@ -356,9 +357,9 @@ Six CSV tables totaling ~927K rows, 5 years of data, 14 countries post-cleanup.
 **Countries:** 14 post-cleanup (Australia, Austria, Belgium, Brasil, China, Colombia, France, Germany, Japan, Poland, South Korea, Spain, United Kingdom, United States)
 
 **Granularity choices:**
-- Revenue analysis: `order_items.status IN ('Complete', 'Shipped', 'Processing')` — captures all delivered or in-flight value
-- Return analysis: `Complete + Returned` (censored data principle)
-- Time analysis: `orders.created_at_dt` for delivery analysis (cleaner than order_items.created_at due to 17% timezone artifact)
+- Revenue analysis: `order_items.status IN ('Complete', 'Shipped', 'Processing')` — captures all delivered or in-flight value. Three statuses (not just `Complete`) used because the dataset contains many older orders (2019–2021) still showing `Shipped` or `Processing` despite their dates clearly indicating completed transactions. This is a data generation artifact — the source process never backfilled final statuses for older rows. Restricting to `Complete` alone would systematically undercount older years and distort YoY trends. See [Data Quality & Import Challenges → Status filter convention](#data-quality--import-challenges) for full discussion.
+- Return analysis: `Complete + Returned` (censored data principle — only counts returns against orders that had time to be returned, i.e., were delivered)
+- Time analysis: `orders.created_at_dt` for delivery analysis (cleaner than order_items.created_at due to 17% timezone artifact + 4,663 delivered_at inversions)
 
 ---
 
@@ -718,7 +719,7 @@ Every page shares a consistent layout pattern. The **header island** contains:
 
 - **Page title** with narrative subtitle (pattern: "Topic: Description vs Description")
 - **Navigation buttons** — `Next →` on Page 1, `← Back` on Page 4, both arrows on Pages 2–3
-- **Info button** — toggles the page's information textbox via bookmark. On click, the button morphs into an `X` (close) icon; clicking again hides the textbox and restores the underlying visual
+- **Info button** — toggles the page's information textbox via bookmark. On click, the button morphs into an `X` (close) icon; clicking again hides the textbox and restores the underlying visual. Each bookmark is configured with **Display only** (Data property unchecked) — clicking the button affects textbox visibility, but does NOT alter slicer state, filter context, or any other visual on the page
 - **Reset Slicers button** — clears Year (and Region on Executive) without disturbing visual cross-filter highlights (conscious scope decision; documented in Methodology section)
 - **Year slicer** — Multi-select with `Ctrl+click`, "Select all" enabled. Default behavior = single-year (replaces selection); power-user behavior = multi-year (`Ctrl+click`)
 - **KPI cards** — 4 KPIs per page, scoped to that department
@@ -800,7 +801,7 @@ Below the header, the **main canvas** uses a 2×2 grid layout (Executive Overvie
 **Main visuals (2×2 grid):**
 
 - **TL — Logistics Speed** — histogram of delivery day distribution (0, 1, 2, 3, 4, 5+ days). Dynamic annotation displays Same Day / Next Day percentages with Polish locale formatting.
-- **TR — Quality Signal** — bar chart of return rate by category. **TOP 15 / ALL toggle** switches between focused and full category view.
+- **TR — Quality Signal** — bar chart of return rate by category. **TOP 15 / ALL toggle** (two separate buttons programmed via bookmarks) switches between focused view (15 worst-offending categories) and full distribution (all 26 categories).
 - **BL — Fulfillment Funnel** — 5-step lifecycle (Placed → Non-Cancelled → Delivered → Not Returned → Kept). **Custom tooltip page** shows Funnel Orders, % of First, % of Previous, Drop-off vs Previous per step.
 - **BR — Operations Health Quadrant** — scatter chart. X = avg delivery time, Y = return rate, bubble size = revenue share. Top-right quadrant = high-risk categories (slow + returns-heavy).
 
