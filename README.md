@@ -375,7 +375,7 @@ Before any visualization work, the data needed to be **interrogated**, not just 
 
 1. **Aggregation efficiency** — questions like "top 10% customers' revenue share" or "year-over-year cohort progression" require grouping, window functions, and conditional aggregation that are expressed cleanly in SQL but become awkward in DAX with large row counts.
 
-2. **Methodology transparency before visualization** — every query was constructed with documented intent (the question being answered), filter rationale (status convention, date range), and validation against multiple aggregations. Findings were captured in working notes before being translated into visuals — preventing the chart-hunting trap of "let me make a graph and see what it shows."
+2. **Methodology transparency before visualization** — every query was constructed with documented intent (the question being answered), filter rationale (status convention, date range), and validation against multiple aggregations. Findings were captured in working notes before being translated into visuals.
 
 3. **Pre-validate findings before dashboarding** — building visuals to "discover" insights is backwards. SQL exploration surfaces what's interesting first, then visuals are designed to communicate confirmed findings to specific stakeholders.
 
