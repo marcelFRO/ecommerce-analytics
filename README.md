@@ -628,7 +628,7 @@ erDiagram
 
 **`order_items` joins to `dimDate` via a `Date Only` column** added in Power Query (`Date.From([created_at_dt])`) to resolve a `DATETIMEOFFSET` vs `Date` type mismatch — relationships require matching data types on both sides.
 
-**`order_items.inventory_item_id` ↔ `inventory_items.id` is 1:1** — each sold item corresponds to exactly one inventory unit, but ~309K inventory units remain unsold (no corresponding `order_items` row). This is intentional: unsold inventory_items represent current stock snapshot, queryable independently via `ISBLANK(inventory_items.sold_at)`.
+**`order_items.inventory_item_id` ↔ `inventory_items.id` is 1:1** — each sold item corresponds to exactly one inventory unit, but ~309K inventory units remain unsold (no corresponding `order_items` row). This is intentional: unsold inventory_items represent current stock snapshot, queryable independently via `ISBLANK(inventory_items.sold_at_dt)`.
 
 ### Auxiliary tables (no relationships)
 
@@ -740,7 +740,7 @@ DIVIDE(
     ),
     CALCULATE(                                  -- denominator: snapshot, Year-stripped
         COUNTROWS(inventory_items),
-        ISBLANK(inventory_items[sold_at]),
+        ISBLANK(inventory_items[sold_at_dt]),
         REMOVEFILTERS(dimDate)
     )
 )
