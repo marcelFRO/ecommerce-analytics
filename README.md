@@ -653,13 +653,13 @@ A recurring architectural pattern: certain entities need to be counted **two dif
 ```dax
 Total Orders =                                  -- canonical, NOT Year-reactive
 CALCULATE(
-    COUNTROWS(orders),
+    DISTINCTCOUNT( orders[order_id] ),
     orders[status] IN { "Complete", "Shipped", "Processing" }
 )
 
 Total Orders (Item-Source) =                    -- Year-reactive variant
 CALCULATE(
-    DISTINCTCOUNT(order_items[order_id]),
+    DISTINCTCOUNT( order_items[order_id] ),
     order_items[status] IN { "Complete", "Shipped", "Processing" }
 )
 ```
