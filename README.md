@@ -871,9 +871,7 @@ These annotations share a consistent principle: **visuals show data; annotations
 
 ### Bookmark `Data` property OFF (info panel pattern)
 
-Every page has an **info button** that toggles an information textbox via bookmark. By default, Power BI bookmarks capture **everything on the page** — including slicer state. This caused the Region tile slicer to revert to a stale state whenever the info button was clicked.
-
-**Fix:** right-click each bookmark → uncheck **Data** property (keeps Display ON, Current Page ON).
+Every page has an **info button** that toggles an information textbox via bookmark. Bookmarks are configured with **Display ON, Data OFF** so they toggle textbox visibility without capturing or restoring slicer state — info button clicks preserve the user's active filter context (Year, Region tile).
 
 ```
 Bookmark properties:
@@ -883,7 +881,7 @@ Bookmark properties:
 [X] All visuals   — applies to entire page
 ```
 
-Same fix applied to the Channel Performance bar sort on C&M (a separate bookmark issue resolved by setting explicit Sort axis → value descending on the visual itself, independent of bookmarks).
+On Customer & Marketing, the Channel Performance bar sort is configured directly on the visual (Sort axis → value descending), keeping sort order independent of bookmark interactions.
 
 ### Connection mode: Import (vs DirectQuery)
 
