@@ -378,7 +378,7 @@ Before any visualization work, the data needed to be **interrogated**, not just 
 
 2. **Methodology transparency before visualization** — every query was constructed with documented intent (the question being answered), filter rationale (status convention, date range), and validation against multiple aggregations. Findings were captured in working notes before being translated into visuals.
 
-3. **Pre-validate findings before dashboarding** — building visuals to "discover" insights is backwards. SQL exploration surfaces what's interesting first, then visuals are designed to communicate confirmed findings to specific stakeholders.
+3. **Pre-validate findings before dashboarding** — SQL exploration surfaces what's interesting first, then visuals are designed to communicate confirmed findings to specific stakeholders.
 
 ### Techniques used
 
