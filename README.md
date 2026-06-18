@@ -773,9 +773,9 @@ Three pre-aggregated SQL queries are loaded into Power BI as separate tables (Ge
 
 This pattern provides **partial reactivity** — useful for visuals that should respect global time context but resist peer-visual cross-filtering that would distort their narrative.
 
-### Dynamic text annotations — 5 DAX measures, 3 patterns
+### Dynamic text annotations — 5 DAX measures, 2 patterns
 
-Across the dashboard, **5 measures generate text annotations** that surface analytical takeaways directly on visuals. The discipline: visuals show data (bars, distributions, ranges); annotations translate that data into the specific finding the reader should notice. Three sub-patterns are used.
+Across the dashboard, **5 measures generate text annotations** that surface analytical takeaways directly on visuals. The discipline: visuals show data (bars, distributions, ranges); annotations translate that data into the specific finding the reader should notice. Two sub-patterns are used.
 
 #### Pattern A — Dynamic range across visible groups
 
@@ -811,9 +811,9 @@ Renders as: *"Channel doesn't differentiate loyalty: 1.39 - 1.41 range"*
 
 The takeaway in both cases is **range consistency** — "everything clusters in a narrow band, category/channel doesn't matter." A static label would have to hard-code "73%-77%" or "1.39-1.41" and go stale when the filter context changes (e.g., user filters to a specific region). The dynamic range computation makes the label self-updating.
 
-#### Pattern B — Conditional subset extraction
+#### Pattern B — Specific value display
 
-When the annotation needs a single specific number computed under a particular condition (top decile share, single-item order rate), `CALCULATE` with a filter argument isolates that subset.
+When the annotation needs specific value(s) rather than a range across groups, two mechanisms appear: `CALCULATE` with a filter argument (when computation under a condition is needed — top decile share, single-item order rate) or direct measure reference (when an existing measure already returns the desired value).
 
 **`Order Comp Annotation`** (Sales & Product, Order Composition donut BL):
 
@@ -849,12 +849,6 @@ RETURN "Top 10% = " & FORMAT( Top10, "0.0%" ) & " revenue · Long-tail pattern"
 
 Renders as: *"Top 10% = 34.0% revenue · Long-tail pattern"*
 
-The takeaway in both cases is a **specific slice value** — "what proportion are single-item orders?" or "what does decile 1 generate?" `CALCULATE` with an explicit filter argument extracts exactly that value, ignoring the broader filter context for the dimension being interrogated.
-
-#### Pattern C — Locale-aware formatting
-
-When the dashboard is built for a non-default locale (Polish users expect comma as decimal separator), `FORMAT` accepts a locale parameter to override the default.
-
 **`Logistics Annotation`** (Operations, Logistics Speed TL):
 
 ```dax
@@ -865,9 +859,11 @@ FORMAT( [Same Day Delivery %], "0.0%", "pl-PL" ) &
 FORMAT( [Next Day Delivery %], "0.0%", "pl-PL" )
 ```
 
-Renders as: *"Same Day: 1,3% | Next Day: 7,4%"* (Polish locale — comma instead of dot)
+Renders as: *"Same Day: 1,3% | Next Day: 7,4%"*
 
-The `"pl-PL"` culture parameter controls thousands/decimal separators per the user's geographic context. Useful when reports are presented to local stakeholders who expect locale-native number formatting (deviating from the en-US `0.0%` default).
+Simpler case — `Same Day Delivery %` and `Next Day Delivery %` measures already return the values needed, so the annotation just concatenates them. Surfaces the small-but-measurable express fulfillment segment (1.3% Same Day, 7.4% Next Day) that bar heights alone might understate.
+
+The takeaway across all three is a **specific slice value** — "what proportion are single-item orders?", "what does decile 1 generate?", "how many orders ship Same/Next Day?". Whether extracted via `CALCULATE` filter (Order Comp, Pareto) or via direct measure reference (Logistics), the principle holds: surface specific numbers in narrative text rather than expecting the reader to extract them from the chart.
 
 #### Design philosophy across all five
 
