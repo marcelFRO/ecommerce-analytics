@@ -384,7 +384,7 @@ Before any visualization work, the data needed to be **interrogated**, not just 
 
 | Technique | Used for | Example questions |
 |---|---|---|
-| **CTEs (`WITH ... AS`)** | Multi-step logic, intermediate aggregates | Customer Pareto, returning customer cohort, top product concentration |
+| **Common Table Expressions (CTEs, `WITH ... AS`)** | Multi-step logic, intermediate aggregates | Customer Pareto, returning customer cohort, top product concentration |
 | **Window functions** (`NTILE`, `ROW_NUMBER`, `SUM() OVER`) | Ranking, decile bucketing, running totals | Decile assignment, cumulative revenue %, rank within category |
 | **`CASE WHEN` segmentation** | Bucketing continuous values, conditional classification | Price buckets, age brackets, new vs returning customer flagging |
 | **Date arithmetic** (`DATEDIFF`, `YEAR()`, `CAST AS DATE`) | Delivery time, year-over-year, seasonality | Avg delivery days, YoY growth, returning customer detection |
