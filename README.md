@@ -392,7 +392,7 @@ Before any visualization work, the data needed to be **interrogated**, not just 
 | **Conditional aggregation** (`SUM(CASE WHEN...)`, `COUNT(CASE WHEN...)`) | Slice metrics by status within one query | Return rate, on-time delivery %, status breakdown |
 | **`NULLIF` and `COALESCE`** | Safe division, null handling | Margin % (avoid /0), category fallback for null fields |
 
-### Featured query: Customer Pareto (decile distribution)
+### Featured query #1: Customer Pareto (decile distribution)
 
 This query backs the **Customer Pareto TR visual** on Customer & Marketing. It demonstrates CTE chaining, window function bucketing, and nested aggregation:
 
@@ -433,11 +433,81 @@ ORDER BY decile;
 
 The output (10 rows, one per decile) was then loaded into Power BI as a static SQL table (`decile_table`) — pre-aggregated at the right granularity for visualization, avoiding the need to replicate `NTILE` in DAX (which would require `RANKX` workarounds on 100K+ rows).
 
+### Featured query #2: Product Pareto (bucket breakdown)
+
+This query backs the **Q8 long-tail finding** ([Sales & Product](#business-questions-by-department) — top 10 SKUs = 0.97% of revenue, top 100 = 4.81%, etc.). It demonstrates three SQL techniques in combination — CTEs, window functions, and `CASE WHEN` bucketing:
+
+```sql
+WITH product_revenue AS (
+    SELECT 
+        oi.product_id,
+        SUM(oi.sale_price) AS product_revenue
+    FROM order_items oi
+    WHERE oi.status IN ('Complete', 'Shipped', 'Processing')
+      AND YEAR(oi.created_at_dt) BETWEEN 2019 AND 2023
+    GROUP BY oi.product_id
+),
+ranked AS (
+    SELECT 
+        product_id,
+        product_revenue,
+        ROW_NUMBER() OVER (ORDER BY product_revenue DESC) AS rank,
+        COUNT(*) OVER () AS total_products,
+        SUM(product_revenue) OVER () AS total_revenue,
+        SUM(product_revenue) OVER (ORDER BY product_revenue DESC ROWS UNBOUNDED PRECEDING) AS cumulative_revenue
+    FROM product_revenue
+)
+SELECT 
+    CASE 
+        WHEN rank <= 10 THEN 'Top 10'
+        WHEN rank <= 100 THEN 'Top 11–100'
+        WHEN rank <= 1000 THEN 'Top 101–1000'
+        WHEN rank <= 5000 THEN 'Top 1001–5000'
+        ELSE 'Rest'
+    END AS bucket,
+    COUNT(*) AS product_count,
+    ROUND(SUM(product_revenue), 0) AS bucket_revenue,
+    ROUND(SUM(product_revenue) * 100.0 / MAX(total_revenue), 2) AS revenue_share_pct
+FROM ranked
+GROUP BY 
+    CASE 
+        WHEN rank <= 10 THEN 'Top 10'
+        WHEN rank <= 100 THEN 'Top 11–100'
+        WHEN rank <= 1000 THEN 'Top 101–1000'
+        WHEN rank <= 5000 THEN 'Top 1001–5000'
+        ELSE 'Rest'
+    END
+ORDER BY MIN(rank);
+```
+
+**How it works:**
+
+1. **CTE 1 (`product_revenue`)** — aggregates revenue per SKU, with the project-wide status filter convention (`Complete + Shipped + Processing` — see [Status filter convention](#data-quality--import-challenges)) and the 2019–2023 date range.
+2. **CTE 2 (`ranked`)** — applies multiple window functions in a single pass:
+   - `ROW_NUMBER() OVER (ORDER BY product_revenue DESC)` assigns each product a rank (1 = highest revenue)
+   - `COUNT(*) OVER ()` and `SUM(product_revenue) OVER ()` (no partition, no ordering) give the total product count and grand total revenue across the entire result set — used as denominators in the final SELECT
+   - `SUM(product_revenue) OVER (ORDER BY product_revenue DESC ROWS UNBOUNDED PRECEDING)` computes a running cumulative — for each row, sum of revenues from rank 1 through current rank. This pattern is the foundation of Pareto / 80-20 / running-share analysis.
+3. **Final SELECT** — `CASE WHEN` buckets products by rank into 5 ranges (Top 10 / Top 11-100 / Top 101-1000 / Top 1001-5000 / Rest), then aggregates per bucket: product count, bucket revenue, and revenue share against the grand total.
+
+The output (5 rows) is the exact table rendered in Q8's answer:
+
+| Bucket | Products | Revenue share |
+|---|---|---|
+| Top 10 | 10 | 0.97% |
+| Top 11–100 | 90 | 3.84% |
+| Top 101–1,000 | 900 | 16.03% |
+| Top 1,001–5,000 | 4,000 | 31.54% |
+| Rest | 23,709 | 47.63% |
+
+The 5-row output pre-computes the long-tail story in a portable shape — small enough to embed verbatim in the README, with all the analytical weight of the underlying 28,709-row dataset preserved in the bucket aggregates.
+
+**Contrast with Customer Pareto query above:** Customer Pareto used `NTILE(10)` for decile bucketing (10 equal-sized buckets, equally spaced by rank). Product Pareto uses **rank-threshold bucketing via `CASE WHEN`** — buckets are size-uneven by design (Top 10 has 10 products, Rest has 23,709) to surface the extreme long-tail shape. Two different techniques for two different analytical questions: "how is customer value distributed by decile" vs "where does product revenue concentration break down".
+
 ### Note on SQL artifact preservation
 
 During the analysis phase, queries were authored interactively in SSMS — exploratory SQL with results validated in real time. Findings (revenue trends, category margins, customer Pareto, channel loyalty, return rates by category, etc.) were captured in working notes and translated directly into Power BI measures and static SQL outputs.
 
-The Pareto query shown above is preserved verbatim. Three additional queries are preserved as **Power Query M source steps** inside the .pbix file (extractable via Power Query → Advanced Editor):
+Both Pareto queries shown above are preserved verbatim. Three additional queries are preserved as **Power Query M source steps** inside the .pbix file (extractable via Power Query → Advanced Editor):
 
 - `query_customer_revenue_year` — customer-day revenue aggregation, links to dimDate for Year-reactive Pareto measures
 - `query_customers` — yearly new vs returning customer counts (powers Customer Retention BL visual)
