@@ -704,12 +704,26 @@ Applied to: `Avg Delivery Time`, `On-Time Delivery %`, `Same Day Delivery %`, `N
 Inventory is a **point-in-time snapshot**, not a time series. Filtering inventory by Year doesn't make sense — current stock is current stock.
 
 ```dax
-Old Stock Value = 
+Total Inventory Cost = 
 CALCULATE(
-    SUM(inventory_items[cost]),
-    ISBLANK(inventory_items[sold_at]),
-    inventory_items[created_at] < DATE(2023, 1, 1),
-    REMOVEFILTERS(dimDate)
+    SUMX( inventory_items, inventory_items[cost] ),
+    ISBLANK( inventory_items[sold_at_dt] ),
+    REMOVEFILTERS( dimDate )
+)
+
+Old Stock % = 
+DIVIDE(
+    CALCULATE(
+        COUNTROWS( inventory_items ),
+        ISBLANK( inventory_items[sold_at_dt] ),
+        inventory_items[created_at_dt] < DATE(2023, 1, 1),
+        REMOVEFILTERS( dimDate )
+    ),
+    CALCULATE(
+        COUNTROWS( inventory_items ),
+        ISBLANK( inventory_items[sold_at_dt] ),
+        REMOVEFILTERS( dimDate )
+    )
 )
 ```
 
