@@ -1144,28 +1144,27 @@ Honest framing of where this project stops:
 
 ```
 ecommerce-analytics/
+├── .gitignore
+├── LICENSE                         # MIT License
 ├── README.md                       # This file
 ├── data/
-│   ├── raw/                        # Original CSV files (preserved from removed source)
-│   │   ├── orders.csv
-│   │   ├── order_items.csv
-│   │   ├── products.csv
-│   │   ├── users.csv
+│   ├── raw/                        # Original CSV files (preserved from recruit41/ecommerce-dataset, since removed)
+│   │   ├── distribution_centers.csv
 │   │   ├── inventory_items.csv
-│   │   └── distribution_centers.csv
-│   └── cleaned/                    # Post comma-in-name fixes (products, inventory_items)
-├── images/                         # Dashboard screenshots
-│   ├── executive-overview-1.png
-│   ├── executive-overview-2.png
-│   ├── sales-product-1.png
-│   ├── sales-product-2.png
-│   ├── customer-marketing-1.png
-│   ├── customer-marketing-2.png
-│   ├── operations-1.png
-│   ├── operations-2.png
-│   └── operations-3.png
+│   │   ├── order_items.csv
+│   │   ├── orders.csv
+│   │   ├── products.csv
+│   │   └── users.csv
+│   └── cleaned/                    # Post comma-in-name fixes (manual file-level cleanup before BULK INSERT)
+│       ├── inventory_items.csv
+│       └── products.csv
+├── images/                         # 26 dashboard screenshots — page-level overviews + per-visual isolates
+│   ├── executive-overview-1.png … executive-overview-6.png   (Executive Overview page + 4 visuals)
+│   ├── sales-product-1.png … sales-product-6.png             (Sales & Product page + 4 visuals)
+│   ├── customer-marketing-1.png … customer-marketing-8.png   (C&M page + 5 visuals incl. 3 Field Parameter states)
+│   └── operations-1.png … operations-6.png                   (Operations page + 3 visuals; ops-2/3 used in Dashboard Tour for filter cascade + tooltip)
 └── powerbi/
-    └── ecommerce-dashboard.pbix    # Full interactive dashboard
+    └── ecommerce-dashboard.pbix    # Full interactive dashboard (21.9 MB, optimized from 53 MB initial)
 ```
 
 ---
