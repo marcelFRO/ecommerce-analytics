@@ -746,6 +746,106 @@ Three pre-aggregated SQL queries are loaded into Power BI as separate tables (Ge
 
 This pattern provides **partial reactivity** — useful for visuals that should respect global time context but resist peer-visual cross-filtering that would distort their narrative.
 
+### Dynamic text annotations — 5 DAX measures, 3 patterns
+
+Across the dashboard, **5 measures generate text annotations** that surface analytical takeaways directly on visuals. The discipline: visuals show data (bars, distributions, ranges); annotations translate that data into the specific finding the reader should notice. Three sub-patterns are used.
+
+#### Pattern A — Dynamic range across visible groups
+
+When the analytical point is "look at variation/consistency across categories or groups," `MINX/MAXX` over `ALLSELECTED` computes the actual range and embeds it in text. The range respects the active filter context (`ALLSELECTED`) — the annotation always reflects the currently visible groups, not the global model.
+
+**`Inventory Annotation`** (Sales & Product, Inventory Health TL):
+
+```dax
+Inventory Annotation = 
+VAR MinOldStock = MINX( ALLSELECTED( products[category] ), [Old Stock %] )
+VAR MaxOldStock = MAXX( ALLSELECTED( products[category] ), [Old Stock %] )
+RETURN 
+"Current inventory state — independent of Year selection. " &
+"Old Stock % stays consistent: " & 
+FORMAT( MinOldStock, "0%" ) & "-" & FORMAT( MaxOldStock, "0%" ) & 
+" range across categories."
+```
+
+Renders as: *"Current inventory state — independent of Year selection. Old Stock % stays consistent: 73%-77% range across categories."*
+
+**`Loyalty Annotation`** (Customer & Marketing, Channel Performance BR):
+
+```dax
+Loyalty Annotation = 
+"Channel doesn't differentiate loyalty: " 
+& FORMAT( MINX( ALLSELECTED( users[traffic_source] ), [Avg Orders Per Customer] ), "0.00" ) 
+& " - " 
+& FORMAT( MAXX( ALLSELECTED( users[traffic_source] ), [Avg Orders Per Customer] ), "0.00" ) 
+& " range"
+```
+
+Renders as: *"Channel doesn't differentiate loyalty: 1.39 - 1.41 range"*
+
+The takeaway in both cases is **range consistency** — "everything clusters in a narrow band, category/channel doesn't matter." A static label would have to hard-code "73%-77%" or "1.39-1.41" and go stale when the filter context changes (e.g., user filters to a specific region). The dynamic range computation makes the label self-updating.
+
+#### Pattern B — Conditional subset extraction
+
+When the annotation needs a single specific number computed under a particular condition (top decile share, single-item order rate), `CALCULATE` with a filter argument isolates that subset.
+
+**`Order Comp Annotation`** (Sales & Product, Order Composition donut BL):
+
+```dax
+Order Comp Annotation = 
+VAR Single = 
+    CALCULATE( 
+        [Total Orders (Item-Source)], 
+        orders[Order Size] = "1 Item" 
+    )
+VAR Total = 
+    CALCULATE( 
+        [Total Orders (Item-Source)], 
+        ALL( orders[Order Size] ) 
+    )
+RETURN 
+"Single-item orders dominate: " 
+& FORMAT( DIVIDE( Single, Total ), "0.0%" ) 
+& " · bundling opportunity"
+```
+
+Renders as: *"Single-item orders dominate: 70.2% · bundling opportunity"*
+
+The denominator uses `ALL(orders[Order Size])` to bypass the visual's current selection — otherwise dividing 1-Item count by 1-Item count would always return 100%.
+
+**`Pareto Annotation`** (Customer & Marketing, Customer Pareto TR):
+
+```dax
+Pareto Annotation = 
+VAR Top10 = CALCULATE( [% Revenue], decile_table[decile] = 1 )
+RETURN "Top 10% = " & FORMAT( Top10, "0.0%" ) & " revenue · Long-tail pattern"
+```
+
+Renders as: *"Top 10% = 34.0% revenue · Long-tail pattern"*
+
+The takeaway in both cases is a **specific slice value** — "what proportion are single-item orders?" or "what does decile 1 generate?" `CALCULATE` with an explicit filter argument extracts exactly that value, ignoring the broader filter context for the dimension being interrogated.
+
+#### Pattern C — Locale-aware formatting
+
+When the dashboard is built for a non-default locale (Polish users expect comma as decimal separator), `FORMAT` accepts a locale parameter to override the default.
+
+**`Logistics Annotation`** (Operations, Logistics Speed TL):
+
+```dax
+Logistics Annotation = 
+"Same Day: " & 
+FORMAT( [Same Day Delivery %], "0.0%", "pl-PL" ) & 
+" | Next Day: " & 
+FORMAT( [Next Day Delivery %], "0.0%", "pl-PL" )
+```
+
+Renders as: *"Same Day: 1,3% | Next Day: 7,4%"* (Polish locale — comma instead of dot)
+
+The `"pl-PL"` culture parameter controls thousands/decimal separators per the user's geographic context. Useful when reports are presented to local stakeholders who expect locale-native number formatting (deviating from the en-US `0.0%` default).
+
+#### Design philosophy across all five
+
+These annotations share a consistent principle: **visuals show data; annotations show the takeaway**. The reader doesn't have to compute the range or extract the headline number from the chart — the dynamic text does it for them, updating with filter context. 5 annotations across 4 pages = consistent design discipline, not one-off labels.
+
 ### Bookmark `Data` property OFF (info panel pattern)
 
 Every page has an **info button** that toggles an information textbox via bookmark. By default, Power BI bookmarks capture **everything on the page** — including slicer state. This caused the Region tile slicer to revert to a stale state whenever the info button was clicked.
