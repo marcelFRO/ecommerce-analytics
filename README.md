@@ -314,11 +314,11 @@ To avoid chart hunting, the project started with a structured list of business q
 
 ```mermaid
 flowchart LR
-    A[6 CSV files<br/>recruit41/ecommerce-dataset] --> B[Manual cleanup<br/>comma-in-name fixes<br/>products + inventory_items]
+    A[6 CSV files<br/>recruit41/ecommerce-dataset<br/>theLook BigQuery mirror] --> B[Excel cleanup<br/>comma-in-name fixes<br/>+ date anomaly detection]
     B --> C[BULK INSERT<br/>SQL Server 2025 Developer<br/>via SSMS]
-    C --> D[20+ analytical queries<br/>across 4 departments<br/>CTEs · window fns · CASE]
-    D --> E[Power BI Desktop<br/>Import mode + Power Query ETL<br/>star schema + DAX measures]
-    E --> F[4-page interactive<br/>dashboard]
+    C --> D[20+ analytical queries<br/>4 departments<br/>CTEs · Window functions · CASE]
+    D --> E[Power BI Desktop<br/>Power Query ETL · star schema · DAX<br/>+ Tabular Editor 2 · DAX Studio]
+    E --> F[4-page interactive dashboard<br/>Field Parameters · custom tooltips<br/>bookmark-driven info panels]
 ```
 
 | Layer | Tool | Purpose |
