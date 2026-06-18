@@ -551,7 +551,7 @@ Cleanest fact-adjacent table. No date inversions (shipped → delivered sequence
 
 Cleanest dimension table — **zero blank cells** across all rows. One issue:
 
-- **España / Deutschland encoding artifact** — same country represented under two strings (Spanish localized name + English name). Resolved in SQL during table normalization via `CASE` statement remapping to canonical English form. Final country count: 14 distinct.
+- **Encoding artifacts in country column** (España/Spain, Deutschland/Germany — localized names duplicating the same countries already represented in English). Resolved in Power Query during ETL via `Table.ReplaceValue` M function remapping to canonical English form. Note: exploratory SQL queries during analysis phase used `CASE WHEN` for the same purpose, but final data transformation happens in Power Query ETL layer. Final country count: 14 distinct.
 
 #### `inventory_items` (490,705 rows)
 
