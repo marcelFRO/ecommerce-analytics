@@ -765,6 +765,68 @@ DIVIDE(
 
 This mirrors the industry-standard formula (COGS / Avg Inventory) — numerator reacts to period, denominator is constant.
 
+### Revenue Growth YoY — filter context defense via `SWITCH(TRUE())`
+
+The `Revenue Growth YoY` KPI on Executive Overview compares focus year revenue against prior year. The "focus year" depends on filter context, which the dashboard exposes through multiple paths — Year slicer, Hero chart sub-year drill (Quarter/Month), Ctrl+click multi-year selection. Four contexts must produce sensible behavior:
+
+| Filter context | Focus year | Behavior |
+|---|---|---|
+| No Year slicer (all years) | Latest year in model (2023) | YoY 2023 vs 2022 |
+| Single full year (e.g., 2022 selected) | Selected year | YoY 2022 vs 2021 |
+| Sub-year filter (Q3 of any year via Hero drill) | Latest year in model (2023) | YoY 2023 vs 2022 (graceful default — sub-year drill doesn't break KPI) |
+| Multi-year Ctrl+click (e.g., 2021 + 2023) | Ambiguous | `BLANK()` — undefined |
+
+Standard YoY measures using `SAMEPERIODLASTYEAR` or `DATEADD` would either error out or produce wrong numbers under sub-year and multi-year contexts. The defensive version detects filter context explicitly via boolean flags, then routes via `SWITCH(TRUE(), ...)` to the appropriate computation:
+
+```dax
+Revenue Growth YoY = 
+VAR SelectedYears = DISTINCTCOUNT( dimDate[Year] )
+VAR TotalYearsInModel = CALCULATE( DISTINCTCOUNT( dimDate[Year] ), ALL( dimDate ) )
+VAR IsAllYears = SelectedYears = TotalYearsInModel
+
+VAR DatesInFilter = COUNTROWS( VALUES( dimDate[Date] ) )
+VAR IsSingleFullYear = SelectedYears = 1 && DatesInFilter >= 365
+VAR IsSubYearFilter = SelectedYears = 1 && DatesInFilter < 365
+
+VAR FocusYear = 
+    IF( IsAllYears || IsSubYearFilter,
+        CALCULATE( MAX( dimDate[Year] ), ALL( dimDate ) ),
+        MAX( dimDate[Year] )
+    )
+
+VAR FocusYearRev = 
+    CALCULATE( [Total Revenue], ALL( dimDate ), dimDate[Year] = FocusYear )
+VAR PrevYearRev = 
+    CALCULATE( [Total Revenue], ALL( dimDate ), dimDate[Year] = FocusYear - 1 )
+
+RETURN
+    SWITCH( TRUE(),
+        IsSingleFullYear && PrevYearRev = 0, BLANK(),                       -- 2019: first year, no prior
+        IsSingleFullYear || IsAllYears || IsSubYearFilter,                  -- valid cases
+            DIVIDE( FocusYearRev - PrevYearRev, PrevYearRev ),
+        BLANK()                                                              -- multi-year custom: ambiguous
+    )
+```
+
+**Pattern breakdown:**
+
+1. **Context detection** — three boolean flags inspect filter state: `IsAllYears` (no slicer), `IsSingleFullYear` (one year ≥365 days), `IsSubYearFilter` (one year <365 days = sub-year drill). The `DISTINCTCOUNT(dimDate[Year])` vs `CALCULATE(..., ALL(dimDate))` comparison detects whether Year filter is active without hardcoding year values.
+
+2. **Focus year resolution** — `IF` routes: all-years or sub-year contexts default to latest year (`MAX(dimDate[Year])` with `ALL`); single-year context uses currently filtered year (`MAX` without `ALL`). The sub-year fallback prevents the KPI from breaking when user drills into Quarter or Month on Hero chart.
+
+3. **Revenue extraction** — `CALCULATE([Total Revenue], ALL(dimDate), dimDate[Year] = X)` explicitly clears existing filter context and applies fresh year filter. Ensures focus and prior calculations are independent of whatever filter user has applied — critical for sub-year case where existing filter shouldn't propagate.
+
+4. **`SWITCH(TRUE())` router** — explicit branching:
+   - First year (2019, no prior data) → `BLANK()` instead of /0
+   - Three valid contexts → `DIVIDE` safe-division YoY
+   - Multi-year Ctrl+click → `BLANK()` (YoY semantically undefined for non-contiguous selections)
+
+**Why this matters strategically**
+
+The Executive Overview KPI displays `▲ +XX%` (green) or `▼ –XX%` (red) — simple visual signal. But the underlying measure must handle filter contexts the analyst doesn't directly control: every Hero chart sub-year click, every multi-select Ctrl+combination, every Year slicer state. Defensive DAX is what separates a robust dashboard (gracefully handles all states) from one that displays errors or wrong numbers under realistic exploration.
+
+Standard advice for KPIs is "show simple numbers." This measure's OUTPUT is simple (one % with arrow), but the underlying logic guards against every UI state the dashboard exposes — a discipline most Power BI work skips.
+
 ### Static SQL outputs — three distinct architectural roles
 
 Three pre-aggregated SQL queries are loaded into Power BI as separate tables (Get Data → Advanced → SQL query). Each serves a **different architectural purpose**:
