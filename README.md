@@ -1280,7 +1280,7 @@ ecommerce-analytics/
 - **Tabular Editor 2** (free) — measure dependency analysis, model inspection, relationship review during development
 - **DAX Studio** (free) — VertiPaq column size analysis during .pbix optimization; identified redundant columns and drove the 53 MB → 21.9 MB file size reduction (59% smaller)
 
-**Methodological framing** inspired by publicly available content on building executive-driven data portfolios — specifically the discipline of starting from business questions rather than data exploration, treating README files as executive summaries, and documenting conscious decisions (including rejections) as portfolio talking points.
+**Methodological framing** inspired by **[Christine Jiang's](https://github.com/christinejiang11)** publicly available content on building executive-driven data portfolios — specifically the discipline of starting from business questions rather than data exploration, treating README files as executive summaries, and documenting conscious decisions (including rejections) as portfolio talking points.
 
 ---
 
