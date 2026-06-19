@@ -883,15 +883,11 @@ Bookmark properties:
 
 On Customer & Marketing, the Channel Performance bar sort is configured directly on the visual (Sort axis → value descending), keeping sort order independent of bookmark interactions.
 
-### Connection mode: Import (vs DirectQuery)
+### Power BI → SQL Server: Import mode
 
-Import mode was chosen over DirectQuery for three reasons:
+Power BI connects to SQL Server in **Import mode** — standard configuration for static analytical datasets. Import enables the Power Query M transformation layer (Date.From for type matching, Region calculated column, sort helpers), supports static SQL outputs as snapshot tables (`decile_table`, `query_customers`, `query_customer_revenue_year` loaded via "Get Data → Advanced → SQL query"), and compresses the full ~927K row model into the .pbix file (21.9 MB post-optimization) for VertiPaq in-memory queries.
 
-1. **Power Query transformations** — Date.From conversion, Region calculated column, calculated columns for sorting. DirectQuery would require equivalent transformations to be expressed at the SQL layer or in T-SQL views.
-2. **Static SQL outputs** — `decile_table`, `query_customers`, `query_customer_revenue_year` are pre-aggregated query results loaded as snapshot tables. DirectQuery would re-execute these queries on every visual interaction, defeating the architectural purpose.
-3. **Performance** — Import compresses the full model into the .pbix file and uses VertiPaq engine for in-memory queries. For ~927K total rows across all tables, this is far faster than DirectQuery round-trips to SQL Server.
-
-Trade-off accepted: data is not real-time (would need scheduled refresh). For a portfolio analytics project on a static dataset, this is the right trade.
+Data is refreshed manually on dataset changes — no scheduled refresh, since this is a static portfolio project.
 
 </details>
 
@@ -1089,7 +1085,6 @@ This section documents **decisions that could have gone other ways**, with ratio
 
 ### Conscious rejections (things deliberately *not* done)
 
-- **DirectQuery** — rejected for this analytical use case (no real-time data need, Power Query transformations required, static SQL outputs needed).
 - **Global bidirectional cross-filter** — tested, broke other measures via ambiguity. Replaced with surgical CROSSFILTER.
 - **DAX `RANKX` for Pareto deciles** — would require iteration over 100K customer rows. Replaced with pre-aggregated SQL `NTILE` output loaded as static table.
 - **"Reset all" button (clear visual cross-filter highlights)** — semantic scope kept narrow (Reset Slicers only). Documented above.
