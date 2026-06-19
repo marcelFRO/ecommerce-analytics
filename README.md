@@ -1037,22 +1037,32 @@ Below the header, the **main canvas** uses a 2×2 grid layout (Executive Overvie
 
 6. **Systemic inventory imbalance** — 20 of 26 categories show unsold stock cost exceeding their all-time revenue, aggregating to $8.85M unsold inventory against $7.5M cumulative revenue (118% ratio). Worst relative offenders: Socks (147%), Clothing Sets (141%), Suits (141%). Largest absolute frozen capital in Jeans ($1.14M) and Outerwear & Coats ($981K). Pattern is broad and structural, not category-specific. *(Absolute dollar amounts above are inflated by synthetic data — see Limitations. Focus on relative rankings between categories, not raw figures.)*
 
-7. **Blazers & Jackets is the highest-ROI marketing target** — triple-positive intersection: highest margin in catalog (62%), best inventory health (87% inventory-to-revenue, only category where stock moves as fast as it accumulates), and lowest revenue share (2.7%). Every promotional dollar invested here returns the most contribution margin, faces no inventory bloat risk, and has the most room to grow share. Conversely, Suits cross the opposite intersection: lowest margin (39.6%), over-stocked (141%), low revenue — clean discontinuation candidate.
+7. **Blazers & Jackets is the highest-ROI catalog expansion candidate** — quadruple-positive: highest margin in catalog (62.1%), best inventory health (87% inventory-to-revenue), 4th-highest revenue per SKU ($391), and limited catalog size (560 SKUs vs 1,400-2,000 for top-revenue categories). The 2.7% revenue share reflects supply ceiling more than demand weakness — each existing SKU generates more revenue than Sweaters, Active, or Fashion Hoodies per unit. Catalog expansion (SKU count) is the lever, not marketing spend on existing assortment. Conversely, **Clothing Sets and Suits are quadruple-negative**: bottom-tier on margin, inventory health, revenue, and catalog size simultaneously — clean discontinuation candidates rather than fixable opportunities.
 
-8. **Quality signal across categories** — 28.5% overall return rate at the high end of industry range (20–30%); **every single category exceeds 25%**. Suits and Suits & Sport Coats lead at 31%. Combined with 39.6% Suits margin (low), clearance pricing is plausible explanation.
+8. **Multi-dimensional portfolio review surfaces 3 winners and 4 exit candidates beyond Blazers/Suits** — four-dimensional ranking (margin × inventory health × revenue share × catalog supply) consistently identifies the same actionable cohorts:
 
-9. **No quality-logistics correlation** — categories distribute across the Operations Health Quadrant without a discernible "slow delivery → more returns" pattern. Returns are quality-driven (product fit, materials, expectations), not logistics-driven. Investment in faster delivery would not move return rates.
+   - **Strategic Darlings (already winning at scale):** Outerwear & Coats (#1 revenue, healthy inventory, highest revenue/SKU $693), Suits & Sport Coats (4th revenue, 5th margin, 3rd inventory health — overlooked twin to Blazers but at 2× Blazers' revenue), Accessories (top-5 margin + inventory + 4% revenue with 1,556 SKUs already deployed).
 
-10. **Bundling opportunity** — 70.2% single-item orders. Cross-sell mechanics (recommended pairings, bundle discounts) underdeveloped. Cheaper to lift AOV via bundling than to acquire new customers.
+   - **Catalog expansion candidates (high efficiency, low supply):** Blazers & Jackets ($391/SKU × 560 SKUs — limited supply ceiling), Suits & Sport Coats ($675/SKU × 738 SKUs — proven economics ready to scale).
+
+   - **Discontinuation candidates (multiple weakness signals):** Clothing Sets (worst on margin, near-worst inventory, smallest revenue, smallest catalog — 37 SKUs), Suits (39.5% margin × 141% inventory × 188 SKUs), Socks (39.6% margin × 146.8% inventory), Leggings (40% margin × 133% inventory).
+
+   Portfolio rebalancing — even modest catalog expansion in 2-3 categories + decommissioning of 3-4 categories — could shift the revenue mix toward higher-margin, healthier-inventory profile without requiring net marketing spend increase.
+
+9. **Quality signal across categories** — 28.5% overall return rate at the high end of industry range (20–30%); **every single category exceeds 25%**. Suits and Suits & Sport Coats lead at 31%. Combined with 39.6% Suits margin (low), clearance pricing is plausible explanation.
+
+10. **No quality-logistics correlation** — categories distribute across the Operations Health Quadrant without a discernible "slow delivery → more returns" pattern. Returns are quality-driven (product fit, materials, expectations), not logistics-driven. Investment in faster delivery would not move return rates.
+
+11. **Bundling opportunity** — 70.2% single-item orders. Cross-sell mechanics (recommended pairings, bundle discounts) underdeveloped. Cheaper to lift AOV via bundling than to acquire new customers.
 
 ### Prioritized recommendations
 
 | # | Recommendation | Rationale | Effort |
 |---|---|---|---|
 | 1 | **Email re-engagement campaign with discount codes + bundle offers** | Activates the unused 97.6% of email-eligible customers; lifts three KPIs concurrently (repeat behavior, AOV via bundling, inventory turnover via markdowns) — see [Strategic Finding #5](#key-insights--recommendations). Lowest-cost intervention with broadest data-supported upside. | Low |
-| 2 | **Discontinue Jumpsuits, Clothing Sets, possibly Suits** | Low margin + low revenue share + high return rate (Suits 31%); frozen capital that won't recover via natural sales velocity | Medium |
+| 2 | **Discontinue Clothing Sets, Suits, Socks, Leggings** | All four show bottom-5 ranking on multiple dimensions simultaneously (margin, inventory health, revenue share, catalog size). Frozen capital won't recover via natural sales velocity. Clothing Sets is most clear-cut case (37 SKUs, 37.3% margin, 141% inventory). | Medium |
 | 3 | **Bundle promotion mechanics** | 70.2% single-item orders represent immediate AOV upside; cheaper than acquisition | Medium |
-| 4 | **Marketing investment in Blazers & Jackets** | Triple-positive: highest margin (62%) + best inventory health (87% inventory-to-revenue) + low revenue share (2.7%) — highest-ROI marketing target in catalog. Every dollar invested returns maximum contribution margin with no inventory bloat risk. | Low–Medium |
+| 4 | **Catalog expansion in Blazers & Jackets and Suits & Sport Coats** | Both categories show high margin (62.1% / 59.8%) + healthy inventory (87% / 91.5%) + high revenue per SKU ($391 / $675), with limited catalog size relative to top-revenue categories. Lever is SKU count expansion (more product variants ordered), not marketing on existing assortment — supply ceiling currently caps revenue regardless of marketing intensity. | Medium |
 | 5 | **Old-collection markdown event** | $1.14M frozen in Jeans, $981K in Outerwear & Coats — turn capital that's locked anyway; do not protect prices on stock that hasn't moved in 12+ months | Low |
 
 </details>
