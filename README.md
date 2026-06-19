@@ -287,14 +287,14 @@ To avoid chart hunting, the project started with a structured list of business q
 **14. What is the average delivery time and SLA performance?**
 
 - **Answer:** Avg delivery time 3.9 days, with 41.7% of orders delivered within 3-day **Service Level Agreement (SLA)** target — majority falls just beyond threshold. Same Day delivery 1.3%, Next Day 7.4% — express fulfillment is a small but measurable segment. Note: 17% of order_items have data quality issues with delivery dates; analysis uses orders table directly (cleaner) with surgical CROSSFILTER for Year reactivity.
-- **Where in dashboard:** Logistics Speed histogram TL on Operations. Dynamic annotation displays headline finding inline: *"Same Day: 1,3% | Next Day: 7,4%"* — uses Polish locale formatting via DAX `FORMAT(..., "pl-PL")` (comma as decimal separator). Surfaces the small-but-measurable express fulfillment segment that bars alone would understate.
+- **Where in dashboard:** Logistics Speed histogram TL on Operations. Dynamic annotation displays headline finding inline: *"Same Day: 1,3% | Next Day: 7,4%"* — surfaces the small-but-measurable express fulfillment segment that bars alone would understate.
 
 ![Logistics Speed histogram – delivery day distribution](images/operations-4.png)
 
 **15. What is the return rate by category and gender? Quality outliers?**
 
 - **Answer:** Return rate 28.5% overall — at the high end of industry range (20–30%); every single category exceeds 25% benchmark. Suits and Suits & Sport Coats lead returns at 31% with low revenue — candidates for discontinuation. Gender breakdown: F 15.5%, M 15.3% — no meaningful difference. Return Rate uses censored data principle: denominator = Complete + Returned only (delivered orders that had time to be returned).
-- **Where in dashboard:** Quality Signal bar chart TR + Operations Health Quadrant BR (scatter). Both visuals expose category-level return rate — Quality Signal as raw bar ranking, Quadrant as bubble plot combining delivery time × return rate × revenue share. Quality Signal includes **TOP 15 / ALL toggle** — two separate buttons programmed via bookmarks that swap visual focus between the 15 worst-return-rate categories (focused decision view) and all 26 categories (full distribution view).
+- **Where in dashboard:** Quality Signal bar chart TR + Operations Health Quadrant BR (scatter). Both visuals expose category-level return rate — Quality Signal as raw bar ranking, Quadrant as bubble plot combining delivery time × return rate % × revenue share. Quality Signal includes **TOP 15 / ALL toggle** — two separate buttons programmed via bookmarks that swap visual focus between the 15 worst-return-rate categories (focused decision view) and all 26 categories (full distribution view).
 
 ![Quality Signal – return rate by category](images/operations-5.png)
 
@@ -995,10 +995,10 @@ Below the header, the **main canvas** uses a 2×2 grid layout (Executive Overvie
 
 **Main visuals (2×2 grid):**
 
-- **TL — Logistics Speed** — histogram of delivery day distribution (0, 1, 2, 3, 4, 5+ days). Dynamic annotation displays Same Day / Next Day percentages with Polish locale formatting.
+- **TL — Logistics Speed** — histogram of delivery day distribution at 1-day intervals (9 buckets, 0 through 8 days — Same Day = 0). Bars show **count of orders** delivered in each day bucket, not percentages. Dynamic annotation surfaces Same Day / Next Day percentages.
 - **TR — Quality Signal** — bar chart of return rate by category. **TOP 15 / ALL toggle** (two separate buttons programmed via bookmarks) switches between focused view (15 worst-offending categories) and full distribution (all 26 categories).
-- **BL — Fulfillment Funnel** — 5-step lifecycle (Placed → Non-Cancelled → Delivered → Not Returned → Kept). **Custom tooltip page** shows Funnel Orders, % of First, % of Previous, Drop-off vs Previous per step.
-- **BR — Operations Health Quadrant** — scatter chart. X = avg delivery time, Y = return rate, bubble size = revenue share. Top-right quadrant = high-risk categories (slow + returns-heavy).
+- **BL — Fulfillment Funnel** — 5-step lifecycle (Placed → Confirmed → Dispatched → Delivered → Kept). **Custom tooltip page** shows Funnel Orders, % of First, % of Previous, Drop-off vs Previous per step.
+- **BR — Operations Health Quadrant** — scatter chart. X = avg delivery time, Y = return rate %, bubble size = revenue share. Top-right quadrant = high-risk categories (slow + returns-heavy).
 
 **Interactions:** TR and BR are dimensional sources (category) — Filter all peers + KPIs on click. TL and BL are value sources (delivery day buckets, funnel steps — operational state, not segmentation) — value clicks isolated, do not reshape other visuals.
 
