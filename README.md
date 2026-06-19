@@ -1157,6 +1157,7 @@ This section documents **decisions that could have gone other ways**, with ratio
 - **Continuous X-axis via Date column for Monthly Hero chart** — default text-typed `Year-Month` column forces Categorical axis, which couldn't fit 60 months on canvas (scrollbar problem). Added `Year-Month Date` calculated column (DATE first-of-month) enabling Continuous axis type — all 60 months auto-fit without scrollbar. Quarterly view (only 20 quarters) doesn't need this — Categorical with sort helper works fine.
 - **Censored data principle for Return Rate** — denominator restricted to `Complete + Returned` (delivered orders), excluding `Shipped + Processing` which haven't entered the return-eligible state. Standard statistical practice when measuring rates of an event with a time lag.
 - **Inventory analysis presented via relative ratios + absolute dollars, with caveat** — investigation revealed dataset synthetic limitations (total unsold inventory cost 118% of all-time revenue, implausibly high for a healthy growing retailer). Kept absolute dollar figures for executive dashboard readability but documented the data quality concern transparently in Limitations + flagged cross-category ratios as the robust analytical layer. This is a real-world tradeoff between presentation clarity and analytical precision.
+- **.pbix file size optimization via VertiPaq column analysis** — initial model size was 53 MB. Using DAX Studio's VertiPaq Analyzer + Tabular Editor 2, profiled per-column memory footprint, identified redundant NVARCHAR date columns (legacy copies kept after `_dt` DATETIMEOFFSET conversion) as the largest space contributors. Systematic removal of redundancy + relationship review reduced .pbix to 21.9 MB (59% reduction) while preserving full analytical capability. Workflow: profile column sizes → identify redundancy → remove safely → verify model integrity → measure savings.
 
 ### Visual & UX decisions
 
@@ -1276,7 +1277,8 @@ ecommerce-analytics/
 **Tooling:**
 - **SQL Server 2025 Developer Edition** + **SSMS** — free local SQL environment
 - **Power BI Desktop** — free dashboard authoring tool
-- **Tabular Editor 2** (free) — measure dependency analysis and model inspection during development
+- **Tabular Editor 2** (free) — measure dependency analysis, model inspection, relationship review during development
+- **DAX Studio** (free) — VertiPaq column size analysis during .pbix optimization; identified redundant columns and drove the 53 MB → 21.9 MB file size reduction (59% smaller)
 
 **Methodological framing** inspired by publicly available content on building executive-driven data portfolios — specifically the discipline of starting from business questions rather than data exploration, treating README files as executive summaries, and documenting conscious decisions (including rejections) as portfolio talking points.
 
