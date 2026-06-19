@@ -970,16 +970,20 @@ Below the header, the **main canvas** uses a 2×2 grid layout (Executive Overvie
 
 **Main visuals (2×2 grid):**
 
-- **TL — Total Customers by Demographic** — bar chart with **Field Parameter dropdown** (Age / Country / Gender). Switches the dimension without rebuilding the visual. Custom tooltip per dimension.
+- **TL — Total Customers by Demographic** — bar chart with **Field Parameter dropdown** (Age / Country / Gender). Switches the dimension without rebuilding the visual.
 - **TR — Customer Pareto** — decile bar chart. **Static SQL output** structure (`decile_table`, no relationships) with **reactive measures** (% revenue, cumulative % revenue, decile revenue) sourced from `query_customer_revenue_year`. Year-reactive but peer-visual-isolated.
 - **BL — Customer Retention** — stacked bar of new vs returning customers per year. **Static SQL output** (`query_customers`, no relationships) — fully isolated from any filter so the 5-year arc is always visible.
 - **BR — Channel Performance** — bar chart of `Channel Revenue per $100` (decomposition measure, sums to $100 across channels). Search highlighted gold `#ED942D`, others deep navy `#132E57` via conditional formatting measure.
 
 **Interactions:** TL ↔ BR bidirectional (cross-filter each other + KPIs). TR and BL **architecturally isolated** (no relationships to fact tables) — peer-visual clicks don't propagate to them, preserving their multi-year narratives by design.
 
-![Customer & Marketing – Age buckets view](images/customer-marketing-1.png)
+![Customer & Marketing – Age buckets view (full page)](images/customer-marketing-1.png)
 
-![Customer & Marketing – Country breakdown via Field Parameter toggle](images/customer-marketing-2.png)
+![Demographic visual – Age view](images/customer-marketing-5.png)
+
+![Demographic visual – Country view](images/customer-marketing-6.png)
+
+![Demographic visual – Gender view](images/customer-marketing-7.png)
 
 ---
 
