@@ -179,8 +179,12 @@ To avoid chart hunting, the project started with a structured list of business q
 
 **4. Which categories balance margin and volume best?**
 
-- **Answer:** Blazers & Jackets have the highest margin (62%) but only 2.7% revenue share — triple-positive intersection when combined with best inventory health (87%, see Q5), making it the highest-ROI marketing target in the catalog. Jeans paradox: #2 revenue ($876K) but low margin (46.5%) — high volume masking weak profitability. Suits at 39.6% margin signal possible clearance pricing (and over-stocked at 141% inventory-to-revenue ratio — discontinuation candidate).
-- **Where in dashboard:** Category Profitability scatter (TR) on Sales & Product. X = Total Items Sold, Y = Avg Margin %, bubble size = Total Revenue. **Top-right quadrant labeled "Strategic Darlings"** (high margin × high volume — ideal categories to invest in). Custom tooltip surfaces Avg Margin %, Revenue Share %, Total Items, Total Revenue per category.
+- **Answer:** The scatter functions as a **2×2 portfolio matrix** (margin × revenue share):
+  - **Top-right "Strategic Darlings"** — high margin × high share, the ideal investment quadrant.
+  - **Top-left (volume-driven)** — high share × lower margin. **Jeans paradox** at 46.5% margin × ~12% share ($876K revenue) — volume masking weak profitability.
+  - **Bottom-right (niche profitable)** — high margin × low share. **Blazers & Jackets** lead at 62% margin × 2.7% share — triple-positive when combined with best inventory health (87%, see Q5), making it the highest-ROI marketing target.
+  - **Bottom-left (discontinuation candidates)** — low margin × low share. **Suits** at 39.6% margin + over-stocked at 141% inventory-to-revenue ratio (see Q5).
+- **Where in dashboard:** Category Profitability scatter (TR) on Sales & Product. X = Avg Margin %, Y = Revenue Share %, bubble size = Total Items Sold. **Top-right quadrant labeled "Strategic Darlings"** (high margin × high revenue share — ideal categories to invest in). Custom tooltip surfaces Avg Margin %, Revenue Share %, Total Items, Total Revenue per category.
 
 ![Category Profitability scatter – clean view](images/sales-product-3.png)
 
@@ -944,7 +948,7 @@ Below the header, the **main canvas** uses a 2×2 grid layout (Executive Overvie
 **Main visuals (2×2 grid):**
 
 - **TL — Inventory Health** — frozen capital by category, with old-stock highlighting. `REMOVEFILTERS(dimDate)` applied (stock is time-independent).
-- **TR — Category Profitability** — scatter chart. X = Total Items Sold, Y = Avg Margin %, bubble size = Total Revenue. **Custom tooltip page** surfaces Avg Margin %, Revenue Share %, Total Items, Total Revenue per category on hover.
+- **TR — Category Profitability** — scatter chart. X = Avg Margin %, Y = Revenue Share %, bubble size = Total Items Sold. **Custom tooltip page** surfaces Avg Margin %, Revenue Share %, Total Items, Total Revenue per category on hover.
 - **BL — Order Composition** — donut chart. Single-item vs multi-item orders breakdown.
 - **BR — Price Bucket** — bar chart. Volume vs revenue across price tiers ($0–19, $20–49, $50–99, $100–199, $200+).
 
