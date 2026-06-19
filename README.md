@@ -1226,19 +1226,15 @@ Honest framing of where this project stops:
 
 - **Reconstruct exploratory SQL queries as `.sql` files** — during the analysis phase, queries were authored interactively in SSMS without persisted file artifacts. A future revision would extract the analytical patterns from chat history and dashboard measures, then publish them under `sql/` organized by department (`01_executive/`, `02_sales_product/`, etc.) for direct SQL skill demonstration without requiring viewers to open the .pbix file.
 
+- **Per-brand catalog analysis** — drill below category into the brand portfolio structure underlying the wide-catalog multi-brand retailer hypothesis. Brand count (how many distinct brands does theLook actually carry?), top brand contributors by revenue and margin, brand-level Pareto distribution (do a few brands dominate, mirroring SKU-level long tail?), and brand-level inventory health to identify which brands carry stuck stock vs healthy turnover. Brand attribution exists on the `products` table (7 nulls flagged in Data Quality findings) but current analysis aggregates only at category level — adding brand dimension would empirically test the multi-brand hypothesis with real brand counts.
+
 - **Cohort analysis page** — RFM segmentation (Recency, Frequency, Monetary), cohort survival curves, customer lifecycle stages. Would replace flat Pareto framing with a temporal customer journey lens.
 
 - **Time series forecasting** — Power BI native forecast or Python integration (via Power Query Python script) to project 2024+ revenue, identify seasonal patterns, and quantify uncertainty bands.
 
-- **Product-level return rate analysis** — drill below category to individual SKUs. Could surface specific defective products driving category-level signal.
-
 - **Customer LTV / CAC modeling** — given acquisition cost assumptions, model expected lifetime revenue per channel and identify channels with positive unit economics.
 
-- **Mobile / tablet layout optimization** — currently desktop-only layout. Power BI mobile view would benefit from a separate layout configuration for phone screens.
-
 - **Bookmark-driven scenario comparison** — "what if we discontinued Jumpsuits?" toggle that shows revised inventory turnover, frozen capital, and revenue impact side by side with current state.
-
-- **Talking points document** — interview prep manual similar to the one produced for the Job Market Intelligence project. Themed by 11 areas (project origin, data engineering, modeling, DAX patterns, dashboard UX, conscious rejections, etc.) with a quick-reference numbers cheat sheet.
 
 </details>
 
