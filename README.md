@@ -62,7 +62,7 @@ Seven headline findings from analyzing 125K orders, 100K customers, and 491K inv
 
 ## Project Origin & Business Context
 
-This project was built with intentional discipline around how data analytics work is structured for executive decision-making.
+This project structures data analytics work around executive decision-making — bounded questions, documented decisions, and traceability from business question through SQL query to dashboard visual.
 
 ### Why this dataset
 
@@ -78,11 +78,11 @@ The dataset (originally **theLook eCommerce**, a fictional clothing retailer dat
 
 ### Anti-tutorial framing
 
-Two common portfolio failure modes work against analytical clarity: **chart hunting** — opening the data and looking for "something interesting" to plot, with no business question to anchor the work — and **analysis paralysis** — overthinking the project scope until forward momentum stops, typically driven by perfectionism, information overload, or fear of choosing the wrong angle. This project deliberately avoided both.
+Two common portfolio failure modes work against analytical clarity: **chart hunting** — opening the data and looking for "something interesting" to plot, with no business question to anchor the work — and **analysis paralysis** — overthinking the project scope until forward momentum stops, typically driven by perfectionism, information overload, or fear of choosing the wrong angle.
 
-Instead, the project started with **17 executive-driven business questions** across 4 departments (see [Business Questions by Department](#business-questions-by-department)). Every visual in the dashboard answers a specific question. Every measure has a documented purpose. Every architectural decision has a written rationale. The bounded question set is itself the antidote to both pitfalls: chart hunting is impossible when every visual must answer a defined question, and analysis paralysis is avoided because scope is finite by design.
+The structural antidote to both is starting from a bounded question set. This project began with **17 executive-driven business questions** across 4 departments (see [Business Questions by Department](#business-questions-by-department)). Every visual in the dashboard answers a specific question. Every measure has a documented purpose. Every architectural decision has a written rationale.
 
-This is the difference between a dashboard built **for stakeholders** versus a dashboard built **about data**.
+A dashboard built for stakeholders differs from a dashboard built about data: the first is scoped by what decisions need supporting, the second is scoped by what columns are available.
 
 ### Methodology: CLEAN framework
 
@@ -715,7 +715,7 @@ IF(
 
 Defensive `IF NOT ISBLANK` check returns `BLANK()` for orders still in Shipped/Processing state (not yet delivered) — `AVERAGE` then correctly excludes these from delivery time calculation rather than treating null as 0.
 
-**Why surgical, not global:** changing relationship cross-filter direction globally (in Model view) would break other measures by introducing ambiguity. Specifically, it broke `AOV per traffic_source` on C&M when tested. Surgical per-measure CROSSFILTER is the **good citizen** pattern — opens bidirectional only where needed, leaves the model relationships clean elsewhere.
+**Why surgical, not global:** changing relationship cross-filter direction globally (in Model view) would break other measures by introducing ambiguity. Specifically, it broke `AOV per traffic_source` on C&M when tested. Surgical per-measure CROSSFILTER opens bidirectional only where needed, leaving the model relationships clean elsewhere.
 
 Applied to: `Avg Delivery Time`, `On-Time Delivery %`, `Same Day Delivery %`, `Next Day Delivery %`, `Funnel Orders` (5 SWITCH branches).
 
@@ -936,7 +936,7 @@ The takeaway across all three is a **specific slice value** — "what proportion
 
 #### Design philosophy across all five
 
-These annotations share a consistent principle: **visuals show data; annotations show the takeaway**. The reader doesn't have to compute the range or extract the headline number from the chart — the dynamic text does it for them, updating with filter context. 5 annotations across 4 pages = consistent design discipline, not one-off labels.
+These annotations share a consistent principle: **visuals show data; annotations show the takeaway**. The reader doesn't have to compute the range or extract the headline number from the chart — the dynamic text does it for them, updating with filter context. The pattern is applied consistently across 5 annotations on 4 pages.
 
 ### Bookmark `Data` property OFF (info panel pattern)
 
@@ -1148,7 +1148,7 @@ Below the header, the **main canvas** uses a 2×2 grid layout (Executive Overvie
 
 <br>
 
-This section documents **decisions that could have gone other ways**, with rationale. Every decision below was made deliberately, not by default.
+This section documents **decisions that could have gone other ways**, with rationale for each.
 
 ### Architectural decisions
 
@@ -1171,7 +1171,7 @@ This section documents **decisions that could have gone other ways**, with ratio
 - **Sort by value descending, not alphabetical** — applied explicitly on the visual (not via bookmark) so it survives bookmark interactions. Executive convention: highest bar on the left, eye flow natural from most important to least.
 - **Bookmark `Data` property = OFF for info panels** — keeps Display ON (textbox visibility) but doesn't touch slicer/filter state. Without this, info button clicks reverted Region tile slicer to stale state.
 - **Reset Slicers (not "Clean View")** — clears only slicer selections, preserves visual cross-filter highlights. Tried converting to full "Clean View" (clear everything); marginal benefit didn't justify reopening finalized pages. Documented as design choice.
-- **Custom tooltips on key analytical visuals** — Category Profitability (margin %, revenue share, items, revenue), Fulfillment Funnel (orders, % first, % previous, drop-off). Standard tooltips would show only the data point's primary metric; custom tooltips deliver the analytical context that makes the visual interpretable.
+- **Custom tooltips on key analytical visuals** — Category Profitability (margin %, revenue share, items, revenue), Fulfillment Funnel (orders, % first, % previous, drop-off). Custom tooltips surface the analytical context (multiple metrics per visual) that default single-metric tooltips can't carry.
 - **Field Parameters with SWITCH-based dynamic titles** — uses the Order column (numeric) in SWITCH, not the label column (composite key error workaround). Reusable Power BI pattern.
 
 ### Conscious rejections (things deliberately *not* done)
