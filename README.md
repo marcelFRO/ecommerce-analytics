@@ -42,17 +42,19 @@
 
 ## Executive Summary
 
-Six headline findings from analyzing 125K orders, 100K customers, and 491K inventory units across Jan 2019 – Dec 2023:
+Seven headline findings from analyzing 125K orders, 100K customers, and 491K inventory units across Jan 2019 – Dec 2023:
 
 - **COVID-driven 238% revenue growth (2019→2020), sustained through 2023** — revenue scaled from $121K (2019) to $2.8M (2023), with no country recording a decline across the full period. Growth is volume-driven, not price-driven (avg item price stable at $59–60 every year), and geographically broad-based.
 
 - **Business model signals point to wide-catalog multi-brand retailer with own inventory** — top 10 products generate only 0.97% of revenue (extreme long tail), 74% of stock is old collection, and every traffic source delivers identical loyalty (1.39–1.41 orders per customer). theLook reads as a long-tail aggregator carrying many brands across diverse categories, not a vertically integrated D2C brand.
 
-- **Customer loyalty crisis: 76.6% buy only once, top 10% generates just 34.3% of revenue** versus industry norm 50–60%. Flat Pareto / Gini ~0.3–0.4 — revenue from breadth, not whales. Strategic implication: mid-tier customer activation beats VIP retention. Returning cohort rate grew organically from 0% (2019) to 20.3% (2023) without explicit campaigns.
+- **Customer loyalty crisis: 76.6% buy only once, top 10% generates just 34.3% of revenue** versus industry norm 50–60%. Flat Pareto / Gini ~0.3–0.4 — revenue from breadth, not whales. Strategic implication: mid-tier customer activation beats VIP retention. Returning cohort share grew organically from 4.7% (2020) to 20.3% (2023) without explicit re-engagement campaigns. (2019 = 0% by construction — first year of dataset.)
 
-- **Only 2,416 of 100K customers (2.4%) were acquired via Email channel** — despite all 100K customers having email addresses on file. The 97.6% acquired through other channels (Search, Organic, Facebook, Display) represents massive untapped re-engagement potential — the company never followed up these customers via email marketing despite having their addresses.
+- **Only 2,416 of 100K customers (2.4%) were acquired via Email channel** — despite all 100K customers having email addresses on file. The 97.6% acquired through other channels (Search, Organic, Facebook, Display) represents massive untapped re-engagement potential — no evidence in the data of systematic email marketing follow-up to convert these acquisitions into a repeat-buyer base.
 
 - **Inventory crisis: 21 of 26 categories have unsold stock cost exceeding their all-time revenue.** Worst relative ratios: Socks (161%), Clothing Sets (153%), Suits (152%), Leggings (144%). Largest absolute frozen capital: Jeans ($1.14M), Outerwear & Coats ($981K), Sweaters ($691K). Combined with 70.2% single-item orders, signals two opportunities: bundling promotions and discontinuation candidates from intersection of low margin + over-stocked categories (Clothing Sets, Suits, Leggings). *Note: the dollar amounts above come from a synthetic dataset and may not be realistic in absolute terms (see [Limitations](#limitations--caveats)). What's reliable is the relative comparison — which categories are more over-stocked vs healthier — not the raw frozen-capital figures.*
+
+- **Multi-dimensional category portfolio reveals catalog expansion candidate alongside discontinuation cohort.** Blazers & Jackets show quadruple-positive signals — 62.1% margin, 94.5% inventory health, $360 revenue per SKU, and a limited catalog (561 SKUs vs ~1,120 cross-category average) — suggesting supply-constrained underweight, not demand weakness. Socks separately flagged as activation candidate via bundling before any discontinuation decision (intimate basket-filler category).
 
 - **Quality signal: 28.5% return rate** at the high end of industry range (20–30%); every single category exceeds the 25% benchmark, with Suits and Suits & Sport Coats leading at 31%. Combined with 39.6% Suits margin, this suggests systematic markdown / clearance pricing in that category.
 
@@ -100,7 +102,7 @@ The project treats theLook as a fictitious operating company. Based on data sign
 - **~44% of catalog generates 80% of revenue** — much flatter than typical 20/80 Pareto, consistent with reselling many SKUs at low velocity each
 - **74% of stock is old collection (pre-2023)** — suggests passive stock turnover, not active SKU lifecycle management typical of vertical retailers
 - **All traffic sources show identical loyalty (1.39–1.41 orders per customer)** — channels don't differentiate customer behavior, which is unusual for vertically integrated brands that typically build channel-specific affinity (e.g., direct email loyalists vs paid acquisition one-timers)
-- **Email reaches only 2.4% of customers despite full email coverage** — no built-out CRM infrastructure, also typical of marketplace operators relying on traffic acquisition
+- **Email reaches only 2.4% of customers despite full email coverage** — no built-out CRM (Customer Relationship Management) infrastructure, also typical of marketplace operators relying on traffic acquisition
 - **Own inventory + warehouses** (490K stock units, 10 distribution centers, $2.1M frozen capital in slow categories) — rules out pure marketplace or dropshipping models, which wouldn't carry inventory risk
 
 This hypothesis affects how findings are interpreted. For example, the 76.6% one-time buyer rate is **not a brand crisis** — it's structural to multi-brand retailer economics (customers loyal to brands carried, not to the platform). Conversely, the $2.1M frozen inventory is a **real and significant** capital problem precisely because the company carries its own stock — unlike marketplace operators who could simply delist slow SKUs at zero capital cost. The recommendation isn't "build loyalty programs" (vertical brand thinking) but rather "activate the unused CRM channel to convert one-time buyers via discount codes."
@@ -182,7 +184,7 @@ To avoid chart hunting, the project started with a structured list of business q
 - **Answer:** The scatter functions as a **2×2 portfolio matrix** (margin × revenue share):
   - **Top-right "Strategic Darlings"** — high margin × high share, the ideal investment quadrant.
   - **Top-left (volume-driven)** — high share × lower margin. **Jeans paradox** at 46.5% margin × ~12% share ($876K revenue) — volume masking weak profitability.
-  - **Bottom-right (niche profitable)** — high margin × low share. **Blazers & Jackets** lead at 62.1% margin × 2.7% share — combined with best inventory health (94.5%, see Q5) and limited 560-SKU catalog, the strongest **catalog expansion candidate** (see Strategic Finding #7 in Key Insights).
+  - **Bottom-right (niche profitable)** — high margin × low share. **Blazers & Jackets** lead at 62.1% margin × 2.7% share — combined with best inventory health (94.5%, see Q5) and limited 561-SKU catalog, the strongest **catalog expansion candidate** (see Strategic Finding #7 in Key Insights).
   - **Bottom-left (discontinuation candidates)** — low margin × low share. **Suits** at 39.6% margin + over-stocked at 152% inventory-to-revenue ratio (see Q5).
 - **Where in dashboard:** Category Profitability scatter (TR) on Sales & Product. X = Avg Margin %, Y = Revenue Share %, bubble size = Total Items Sold. **Top-right quadrant labeled "Strategic Darlings"** (high margin × high revenue share — ideal categories to invest in). Custom tooltip surfaces Avg Margin %, Revenue Share %, Total Items, Total Revenue per category.
 
@@ -245,7 +247,7 @@ To avoid chart hunting, the project started with a structured list of business q
 **10. How does customer value distribute — Pareto pattern?**
 
 - **Answer:** Top 10% of customers generate 34.3% of revenue versus industry norm 50–60%. Flat Pareto / Gini ~0.3–0.4 — revenue from breadth not whales. Strategic implication: mid-tier activation > VIP retention.
-- **Where in dashboard:** Customer Pareto bar chart TR on Customer & Marketing. Static SQL output structure (decile_table), with reactive measures pulling from `query_customer_revenue_year` (Year-filtered customer revenue at day granularity). Dynamic annotation displays headline finding inline: *"Top 10% = 34.0% revenue · Long-tail pattern"* — anchors the visual in the takeaway (decile 1's contribution) so reader doesn't have to compute the share manually.
+- **Where in dashboard:** Customer Pareto bar chart TR on Customer & Marketing. Color encoding splits the chart at the Pareto threshold: deciles 1–5 in dark navy (cumulative ~80% revenue), deciles 6–10 in light blue — visualizing the 80/20 principle directly without requiring computation. Static SQL output structure (decile_table), with reactive measures pulling from `query_customer_revenue_year` (Year-filtered customer revenue at day granularity). Dynamic annotation displays headline finding inline: *"Top 10% = 34.0% revenue · Long-tail pattern"* — anchors the visual in the takeaway (decile 1's contribution) so reader doesn't have to compute the share manually.
 
 ![Customer Pareto – decile distribution](images/customer-marketing-4.png)
 
@@ -269,9 +271,9 @@ To avoid chart hunting, the project started with a structured list of business q
 
 **13. Which acquisition channel generates the most revenue contribution — and what does this say about channel efficiency?**
 
-- **Answer:** Search dominates raw revenue contribution: per $100 of channel-attributed revenue, Search generates $70.06, with Organic at $15.09, Facebook at $5.78, Email at $4.98, and Display at $4.09. **But the strategic implication is not "scale Search further" — it's that low-cost channels are dramatically underutilized.** Search dominance comes paired with paid acquisition costs (cost-per-click); Email's $4.98 contribution is achieved at **near-zero marginal cost** (sending to existing customer base); Facebook's $5.78 is largely from organic posts (only Facebook Ads carry real cost). Combined with Q12's finding that all channels deliver identical customer loyalty (1.39–1.41 orders per customer), the cost-efficiency conclusion is clear: **Email and Facebook are the high-ROI growth levers, not Search**. Email is especially underutilized — 100K customers have email addresses on file (registration data) but only 2,416 (2.4%) were acquired via this channel. Expanding email and Facebook outreach likely delivers higher marginal ROI than further investment in paid Search, where diminishing returns on CAC are inevitable at this scale of dominance.
+- **Answer:** Search dominates raw revenue contribution: per $100 of channel-attributed revenue, Search generates $70.06, with Organic at $15.09, Facebook at $5.78, Email at $4.98, and Display at $4.09. **But the strategic implication is not "scale Search further" — it's that low-cost channels are dramatically underutilized.** Search dominance comes paired with paid acquisition costs (cost-per-click); Email's $4.98 contribution is achieved at **near-zero marginal cost** (sending to existing customer base); Facebook's $5.78 is largely from organic posts (only Facebook Ads carry real cost). Combined with Q12's finding that all channels deliver identical customer loyalty (1.39–1.41 orders per customer), the cost-efficiency conclusion is clear: **Email and Facebook are the high-ROI growth levers, not Search**. Email is especially underutilized — 100K customers have email addresses on file (registration data) but only 2,416 (2.4%) were acquired via this channel. Expanding email and Facebook outreach likely delivers higher marginal ROI than further investment in paid Search, where diminishing returns on CAC (Customer Acquisition Cost) are inevitable at this scale of dominance.
 - **Strategic synthesis:** Email's role extends beyond cost-efficiency — a single promotional program (discount codes, bundle offers) addresses three structural problems concurrently (76.6% one-time buyers Q9, 70.2% single-item orders Q6, inventory bloat Q5). Three KPIs from three departments lifted through one low-cost intervention. See **Strategic Finding 5** in [Key Insights](#key-insights--recommendations) for full discussion.
-- **Where in dashboard:** Channel Performance bar chart BR on Customer & Marketing — same visual supports Q12. Uses `Channel Revenue per $100` measure (decomposition of revenue across channels, sums to $100 — explicit anchor avoids AOV cognitive coupling). Search bar highlighted gold (`#ED942D`); others deep navy (`#132E57`).
+- **Where in dashboard:** Channel Performance bar chart BR on Customer & Marketing — same visual supports Q12. Uses `Channel Revenue per $100` measure (decomposition of revenue across channels, sums to $100 — explicit anchor avoids AOV (Average Order Value) cognitive coupling). Search bar highlighted gold (`#ED942D`); others deep navy (`#132E57`).
 
 </details>
 
@@ -334,6 +336,7 @@ flowchart LR
 | Modeling | Power BI Desktop, DAX | Star schema (1 snowflake element), 30+ measures |
 | Visualization | Power BI Desktop | 4-page interactive dashboard with bookmarks, Field Parameters, custom tooltips |
 | External tooling | Tabular Editor 2 (free) + DAX Studio (free) | Measure dependency analysis, model inspection, VertiPaq column size analysis during final .pbix optimization (drove 53 MB → 21.9 MB size reduction) |
+| Version control | GitHub Desktop | Repository sync via Git client — required because multiple CSV data files exceeded GitHub's 25 MB web upload limit |
 
 **Connection mode: Import** (not DirectQuery) — chosen to support Power Query transformations and static SQL query results as separate tables (e.g., `decile_table`, `query_customers`, `query_customer_revenue_year`).
 
@@ -1097,7 +1100,7 @@ Below the header, the **main canvas** uses a 2×2 grid layout (Executive Overvie
 
 ### Operational findings
 
-6. **Systemic inventory imbalance** — 21 of 26 categories show unsold stock cost exceeding their all-time revenue, aggregating to $8.85M unsold inventory against $7.5M cumulative revenue (118% ratio). Worst relative offenders: Socks (161%), Clothing Sets (153%), Suits (152%). Largest absolute frozen capital in Jeans ($1.14M) and Outerwear & Coats ($981K). Pattern is broad and structural, not category-specific. *(Absolute dollar amounts above are inflated by synthetic data — see Limitations. Focus on relative rankings between categories, not raw figures.)*
+6. **Systemic inventory imbalance** — 21 of 26 categories show unsold stock cost exceeding their all-time revenue, aggregating to $8.85M unsold inventory against $7.5M cumulative revenue (118% ratio). Worst relative offenders: Socks (161%), Clothing Sets (153%), Suits (152%). Largest absolute frozen capital in Jeans ($1.14M), Outerwear & Coats ($981K), and Sweaters ($691K). Pattern is broad and structural, not category-specific. *(Absolute dollar amounts above are inflated by synthetic data — see Limitations. Focus on relative rankings between categories, not raw figures.)*
 
 7. **Blazers & Jackets is the highest-ROI catalog expansion candidate** — quadruple-positive: highest margin in catalog (62.1%), lowest inventory-to-revenue ratio at 94.5% (best inventory health among 26 categories), top-5 revenue per SKU at $360, and limited catalog size (560 SKUs vs 1,400-2,000 for top-revenue categories). The 2.7% revenue share reflects supply ceiling more than demand weakness — each existing SKU generates more revenue than Sweaters, Active, or Fashion Hoodies per unit. Catalog expansion (SKU count) is the lever, not marketing spend on existing assortment. Conversely, **Clothing Sets and Suits are quadruple-negative**: bottom-tier on margin, inventory health, revenue, and catalog size simultaneously — clean discontinuation candidates rather than fixable opportunities.
 
@@ -1105,7 +1108,7 @@ Below the header, the **main canvas** uses a 2×2 grid layout (Executive Overvie
 
    - **Strategic Darlings (winning at scale):** Outerwear & Coats (#1 revenue at 12.1% share, #1 revenue per SKU at $637 — most efficient catalog), Suits & Sport Coats (4th revenue at 6.1% share + 5th margin at 59.8% + 5th inventory health at 99.6% + #2 revenue per SKU at $620 — overlooked twin to Blazers but at 2× Blazers' revenue), Accessories (top-3 margin at 59.9% + top-3 inventory health at 98.7% across 1,556 SKUs).
 
-   - **Catalog expansion candidates (high efficiency × low supply):** Blazers & Jackets ($360/SKU × 560 SKUs — high revenue per SKU constrained by limited catalog) and Suits & Sport Coats ($620/SKU × 738 SKUs — proven economics, room to scale further. Note: already a Strategic Darling above; expansion would scale proven performance, not bet on unproven demand).
+   - **Catalog expansion candidates (high efficiency × low supply):** Blazers & Jackets ($360/SKU × 561 SKUs — high revenue per SKU constrained by limited catalog) and Suits & Sport Coats ($620/SKU × 738 SKUs — proven economics, room to scale further. Note: already a Strategic Darling above; expansion would scale proven performance, not bet on unproven demand).
 
    - **Discontinuation candidates (multiple weakness signals):** Clothing Sets (worst margin at 37.3%, near-worst inventory at 153%, smallest revenue at $12K, smallest catalog at 37 SKUs), Suits (39.6% margin × 152% inventory × small 188-SKU catalog), Leggings (40% margin × 144% inventory).
 
@@ -1279,6 +1282,7 @@ ecommerce-analytics/
 - **Power BI Desktop** — free dashboard authoring tool
 - **Tabular Editor 2** (free) — measure dependency analysis, model inspection, relationship review during development
 - **DAX Studio** (free) — VertiPaq column size analysis during .pbix optimization; identified redundant columns and drove the 53 MB → 21.9 MB file size reduction (59% smaller)
+- **GitHub Desktop** — repository synchronization (multiple CSV files exceeded GitHub's 25 MB web upload limit, requiring desktop Git client)
 
 **Methodological framing** inspired by **[Christine Jiang's](https://github.com/christinejiang11)** publicly available content on building executive-driven data portfolios — specifically the discipline of starting from business questions rather than data exploration, treating README files as executive summaries, and documenting conscious decisions (including rejections) as portfolio talking points.
 
