@@ -671,8 +671,8 @@ CALCULATE(
 )
 ```
 
-- **Canonical version** sources from `orders` table (correct semantic — "orders" come from orders table). Used where Year reactivity is not required (e.g., AOV decomposition on C&M visual).
-- **Item-Source version** sources from `order_items` table, which has the `Date Only → dimDate` relationship. Used in KPI cards and visuals requiring Year filter propagation.
+- **Canonical version** sources from `orders` table (semantic accuracy — counting orders requires counting from the orders entity, not from order-item rows). Used in `Avg Orders Per Customer` measure (DIVIDE([Total Orders], [Total Customers])), which powers the **Orders Per Client KPI** and **Loyalty Annotation** on Customer & Marketing. Because `orders` lacks a direct `dimDate` relationship, this measure applies surgical `CROSSFILTER(order_items[order_id], orders[order_id], Both)` inside CALCULATE to propagate both Year (via dimDate → order_items → orders) and traffic_source (via users → order_items → orders) filters. Item-Source variant would count items-per-customer instead of orders-per-customer — wrong semantic.
+- **Item-Source version** sources from `order_items` table, which has the native `Date Only → dimDate` relationship. Bound directly to all consumers that need straightforward Year reactivity: Total Orders KPIs on Executive Overview + Sales & Product, Revenue Growth hero chart, Global Reach map tooltip, Order Composition donut + `Order Comp Annotation`, `Avg Order Value` measure (Sales & Product AOV KPI), Logistics Speed on Operations.
 
 #### Total Customers
 
