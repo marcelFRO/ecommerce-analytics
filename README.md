@@ -52,7 +52,7 @@ Seven headline findings from analyzing 125K orders, 100K customers, and 491K inv
 
 - **Only 2,416 of 100K customers (2.4%) were acquired via Email channel** — despite all 100K customers having email addresses on file. The 97.6% acquired through other channels (Search, Organic, Facebook, Display) represents massive untapped re-engagement potential — no evidence in the data of systematic email marketing follow-up to convert these acquisitions into a repeat-buyer base.
 
-- **Inventory crisis: 21 of 26 categories have unsold stock cost exceeding their all-time revenue.** Worst relative ratios: Socks (161%), Clothing Sets (153%), Suits (152%), Leggings (144%). Largest absolute frozen capital: Jeans ($1.14M), Outerwear & Coats ($981K), Sweaters ($691K). Combined with 70.2% single-item orders, signals two opportunities: bundling promotions and discontinuation candidates from intersection of low margin + over-stocked categories (Clothing Sets, Suits, Leggings). *Note: the dollar amounts above come from a synthetic dataset and may not be realistic in absolute terms (see [Limitations](#limitations--caveats)). What's reliable is the relative comparison — which categories are more over-stocked vs healthier — not the raw frozen-capital figures.*
+- **Inventory crisis: 21 of 26 categories have unsold stock cost exceeding their all-time revenue.** Worst relative ratios: Socks (161%), Clothing Sets (153%), Suits (152%), Leggings (144%). Largest absolute frozen capital: Jeans ($1.14M), Outerwear & Coats ($981K), Sweaters ($691K). Combined with 70.2% single-item orders, signals two structural opportunities: bundling promotions and discontinuation candidates from intersection of low margin + over-stocked categories (Clothing Sets, Suits, Leggings). *Note: the dollar amounts above come from a synthetic dataset and may not be realistic in absolute terms (see [Limitations](#limitations--caveats)). What's reliable is the relative comparison — which categories are more over-stocked vs healthier — not the raw frozen-capital figures.*
 
 - **Multi-dimensional category portfolio reveals catalog expansion candidate alongside discontinuation cohort.** Blazers & Jackets show quadruple-positive signals — 62.1% margin, 94.5% inventory health, $360 revenue per SKU, and a limited catalog (561 SKUs vs ~1,120 cross-category average) — suggesting supply-constrained underweight, not demand weakness. Socks separately flagged as activation candidate via bundling before any discontinuation decision (intimate basket-filler category).
 
@@ -102,7 +102,7 @@ The project treats theLook as a fictitious operating company. Based on data sign
 - **~44% of catalog generates 80% of revenue** — much flatter than typical 20/80 Pareto, consistent with reselling many SKUs at low velocity each
 - **74% of stock is old collection (pre-2023)** — suggests passive stock turnover, not active SKU lifecycle management typical of vertical retailers
 - **All traffic sources show identical loyalty (1.39–1.41 orders per customer)** — channels don't differentiate customer behavior, which is unusual for vertically integrated brands that typically build channel-specific affinity (e.g., direct email loyalists vs paid acquisition one-timers)
-- **Email reaches only 2.4% of customers despite full email coverage** — no built-out CRM (Customer Relationship Management) infrastructure, also typical of marketplace operators relying on traffic acquisition
+- **Only 2.4% of customers were acquired through the Email channel despite full email coverage** — no built-out CRM (Customer Relationship Management) infrastructure, also typical of marketplace operators relying on traffic acquisition
 - **Own inventory + warehouses** (490K stock units, 10 distribution centers, $2.1M frozen capital in slow categories) — rules out pure marketplace or dropshipping models, which wouldn't carry inventory risk
 
 This hypothesis affects how findings are interpreted. For example, the 76.6% one-time buyer rate is **not a brand crisis** — it's structural to multi-brand retailer economics (customers loyal to brands carried, not to the platform). Conversely, the $2.1M frozen inventory is a **real and significant** capital problem precisely because the company carries its own stock — unlike marketplace operators who could simply delist slow SKUs at zero capital cost. The recommendation isn't "build loyalty programs" (vertical brand thinking) but rather "activate the unused CRM channel to convert one-time buyers via discount codes."
@@ -239,7 +239,7 @@ To avoid chart hunting, the project started with a structured list of business q
 
 **9. What is the customer repeat purchase rate trend?**
 
-- **Answer:** 76.6% of customers buy only once at lifetime level. However, repeat purchase rate (cohort-based: customers with at least one order in any prior year) grew organically from 0% in 2019 (structural baseline — no prior years) to 20.3% by 2023 — year-over-year improvement in organic retention achieved without explicit campaign intervention. Broad-based customer acquisition with improving retention over time.
+- **Answer:** 76.6% of customers buy only once at lifetime level. However, repeat purchase rate (cohort-based: customers with at least one order in any prior year) grew organically from 4.7% (2020) to 20.3% (2023) — year-over-year improvement in organic retention achieved without explicit campaign intervention. (2019 = 0% by construction — first year of dataset.) Broad-based customer acquisition with improving retention over time.
 - **Where in dashboard:** Customer Retention static SQL visual on Customer & Marketing (BL). Year-over-year trend, not reactive to peer-visual cross-filtering by design (multi-year narrative preserved).
 
 ![Customer Retention – new vs returning by year](images/customer-marketing-3.png)
@@ -264,7 +264,7 @@ To avoid chart hunting, the project started with a structured list of business q
 
 **12. Which traffic sources deliver loyal customers vs one-time buyers?**
 
-- **Answer:** All traffic sources show identical loyalty (1.39–1.41 orders per customer) — channel choice doesn't differentiate repeat behavior. Only 2,416 customers (2.4%) were acquired via Email channel, despite all 100K customers having email addresses on file — the 97.6% reached via other channels represents untapped email re-engagement potential. For per-channel revenue contribution breakdown, see Q13.
+- **Answer:** All traffic sources show identical loyalty (1.39–1.41 orders per customer) — channel choice doesn't differentiate repeat behavior. Only 2,416 customers (2.4%) were acquired via Email channel, despite all 100K customers having email addresses on file — the 97.6% acquired via other channels represents untapped email re-engagement potential. For per-channel revenue contribution breakdown, see Q13.
 - **Where in dashboard:** Channel Performance bar chart BR on Customer & Marketing. Uses `Channel Revenue per $100` measure (decomposition of revenue across channels, sums to $100) — explicit anchor avoids AOV cognitive coupling. Search bar highlighted gold (`#ED942D`), others deep navy (`#132E57`). Dynamic annotation displays loyalty finding inline: *"Channel doesn't differentiate loyalty: 1.39 - 1.41 range"* — visual shows revenue differences across channels, annotation surfaces the counter-intuitive loyalty parity (different acquisition shares, identical retention).
 
 ![Channel Performance – Revenue contribution per $100](images/customer-marketing-8.png)
@@ -1102,7 +1102,7 @@ Below the header, the **main canvas** uses a 2×2 grid layout (Executive Overvie
 
 6. **Systemic inventory imbalance** — 21 of 26 categories show unsold stock cost exceeding their all-time revenue, aggregating to $8.85M unsold inventory against $7.5M cumulative revenue (118% ratio). Worst relative offenders: Socks (161%), Clothing Sets (153%), Suits (152%). Largest absolute frozen capital in Jeans ($1.14M), Outerwear & Coats ($981K), and Sweaters ($691K). Pattern is broad and structural, not category-specific. *(Absolute dollar amounts above are inflated by synthetic data — see Limitations. Focus on relative rankings between categories, not raw figures.)*
 
-7. **Blazers & Jackets is the highest-ROI catalog expansion candidate** — quadruple-positive: highest margin in catalog (62.1%), lowest inventory-to-revenue ratio at 94.5% (best inventory health among 26 categories), top-5 revenue per SKU at $360, and limited catalog size (560 SKUs vs 1,400-2,000 for top-revenue categories). The 2.7% revenue share reflects supply ceiling more than demand weakness — each existing SKU generates more revenue than Sweaters, Active, or Fashion Hoodies per unit. Catalog expansion (SKU count) is the lever, not marketing spend on existing assortment. Conversely, **Clothing Sets and Suits are quadruple-negative**: bottom-tier on margin, inventory health, revenue, and catalog size simultaneously — clean discontinuation candidates rather than fixable opportunities.
+7. **Blazers & Jackets is the highest-ROI catalog expansion candidate** — quadruple-positive: highest margin in catalog (62.1%), lowest inventory-to-revenue ratio at 94.5% (best inventory health among 26 categories), top-5 revenue per SKU at $360, and limited catalog size (561 SKUs vs 1,400-2,000 for top-revenue categories). The 2.7% revenue share reflects supply ceiling more than demand weakness — each existing SKU generates more revenue than Sweaters, Active, or Fashion Hoodies per unit. Catalog expansion (SKU count) is the lever, not marketing spend on existing assortment. Conversely, **Clothing Sets and Suits are quadruple-negative**: bottom-tier on margin, inventory health, revenue, and catalog size simultaneously — clean discontinuation candidates rather than fixable opportunities.
 
 8. **Multi-dimensional portfolio review across the broader catalog** — four-dimensional ranking (margin × inventory health × revenue share × catalog supply) sorts categories into four actionable cohorts:
 
@@ -1238,7 +1238,7 @@ Honest framing of where this project stops:
 
 - **Customer LTV / CAC modeling** — given acquisition cost assumptions, model expected lifetime revenue per channel and identify channels with positive unit economics.
 
-- **Bookmark-driven scenario comparison** — "what if we discontinued Jumpsuits?" toggle that shows revised inventory turnover, frozen capital, and revenue impact side by side with current state.
+- **Bookmark-driven scenario comparison** — "what if we discontinued the bottom-margin categories?" toggle that shows revised inventory turnover, frozen capital, and revenue impact side by side with current state across Clothing Sets, Suits, and Leggings.
 
 </details>
 
