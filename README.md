@@ -54,7 +54,7 @@ Seven headline findings from analyzing 125K orders, 100K customers, and 491K inv
 
 - **Inventory crisis: 21 of 26 categories have unsold stock cost exceeding their all-time revenue.** Worst relative ratios: Socks (161%), Clothing Sets (153%), Suits (152%), Leggings (144%). Largest absolute frozen capital: Jeans ($1.14M), Outerwear & Coats ($981K), Sweaters ($691K). Combined with 70.2% single-item orders, signals two structural opportunities: bundling promotions and discontinuation candidates from intersection of low margin + over-stocked categories (Clothing Sets, Suits, Leggings). *Note: the dollar amounts above come from a synthetic dataset and may not be realistic in absolute terms (see [Limitations](#limitations--caveats)). What's reliable is the relative comparison — which categories are more over-stocked vs healthier — not the raw frozen-capital figures.*
 
-- **Multi-dimensional category portfolio reveals catalog expansion candidate alongside discontinuation cohort.** Blazers & Jackets show quadruple-positive signals — 62.1% margin, 94.5% inventory health, $360 revenue per SKU, and a limited catalog (561 SKUs vs ~1,120 cross-category average) — suggesting supply-constrained underweight, not demand weakness. Socks separately flagged as activation candidate via bundling before any discontinuation decision (intimate basket-filler category).
+- **Multi-dimensional category portfolio reveals catalog expansion candidate alongside discontinuation cohort.** Blazers & Jackets show quadruple-positive signals — 62.1% margin, 94.5% inventory health, $360 revenue per SKU, and a limited catalog (561 SKUs vs 1,400-2,000 for top-revenue categories) — suggesting supply-constrained underweight, not demand weakness. Socks separately flagged as activation candidate via bundling before any discontinuation decision (intimate basket-filler category).
 
 - **Quality signal: 28.5% return rate** at the high end of industry range (20–30%); every single category exceeds the 25% benchmark, with Suits and Suits & Sport Coats leading at 31%. Combined with 39.6% Suits margin, this suggests systematic markdown / clearance pricing in that category.
 
@@ -163,7 +163,7 @@ To avoid chart hunting, the project started with a structured list of business q
 
 **3. Which categories drive total revenue mix?**
 
-- **Answer:** Outerwear & Coats leads at $904K (12.2% share), followed by Jeans at $876K (11.7%). Treemap with conditional formatting highlights top 3 categories in deep navy to anchor reader attention.
+- **Answer:** Outerwear & Coats leads at $904K (12.1% share), followed by Jeans at $876K (11.7%). Treemap with conditional formatting highlights top 3 categories in deep navy to anchor reader attention.
 - **Where in dashboard:** Revenue Drivers treemap on Executive Overview. Top 3 categories colored deep navy, others light navy — color convention matches the map's "dark = high revenue" semantic. Hover tooltip shows Total Revenue, Total Items, Revenue Share %, and Avg Margin % per category.
 
 ![Revenue Drivers treemap](images/executive-overview-6.png)
@@ -192,7 +192,7 @@ To avoid chart hunting, the project started with a structured list of business q
 
 **5. What inventory is slow-moving and how much capital is frozen?**
 
-- **Answer:** ~74% of all stock is old collection (added before 2023). 21 of 26 categories show unsold stock cost exceeding their all-time revenue — worst relative offenders: Socks (161%), Clothing Sets (153%), Suits (152%). Largest absolute frozen capital: Jeans ($1.14M), Outerwear & Coats ($981K), Sweaters ($691K). Inventory measures use `REMOVEFILTERS(dimDate)` since stock is a point-in-time snapshot, not time-series. *Note: absolute dollar values may be inflated by synthetic data generation; relative cross-category ratios are the robust analytical signal (see Limitations).*
+- **Answer:** ~74% of all stock is old collection (added before 2023). 21 of 26 categories show unsold stock cost exceeding their all-time revenue — worst relative offenders: Socks (161%), Clothing Sets (153%), Suits (152%), Leggings (144%). Largest absolute frozen capital: Jeans ($1.14M), Outerwear & Coats ($981K), Sweaters ($691K). Inventory measures use `REMOVEFILTERS(dimDate)` since stock is a point-in-time snapshot, not time-series. *Note: absolute dollar values may be inflated by synthetic data generation; relative cross-category ratios are the robust analytical signal (see Limitations).*
 - **Where in dashboard:** Inventory Health TL on Sales & Product. Dynamic annotation displays current state independent of Year selection: *"Old Stock % stays consistent: 73%–77% range across categories"* — communicates that inventory snapshot is time-independent (and that no single category escapes the broad stock-rotation problem).
 
 ![Inventory Health by category](images/sales-product-4.png)
@@ -1100,7 +1100,7 @@ Below the header, the **main canvas** uses a 2×2 grid layout (Executive Overvie
 
 ### Operational findings
 
-6. **Systemic inventory imbalance** — 21 of 26 categories show unsold stock cost exceeding their all-time revenue, aggregating to $8.85M unsold inventory against $7.5M cumulative revenue (118% ratio). Worst relative offenders: Socks (161%), Clothing Sets (153%), Suits (152%). Largest absolute frozen capital in Jeans ($1.14M), Outerwear & Coats ($981K), and Sweaters ($691K). Pattern is broad and structural, not category-specific. *(Absolute dollar amounts above are inflated by synthetic data — see Limitations. Focus on relative rankings between categories, not raw figures.)*
+6. **Systemic inventory imbalance** — 21 of 26 categories show unsold stock cost exceeding their all-time revenue, aggregating to $8.85M unsold inventory against $7.5M cumulative revenue (118% ratio). Worst relative offenders: Socks (161%), Clothing Sets (153%), Suits (152%), Leggings (144%). Largest absolute frozen capital in Jeans ($1.14M), Outerwear & Coats ($981K), and Sweaters ($691K). Pattern is broad and structural, not category-specific. *(Absolute dollar amounts above are inflated by synthetic data — see Limitations. Focus on relative rankings between categories, not raw figures.)*
 
 7. **Blazers & Jackets is the highest-ROI catalog expansion candidate** — quadruple-positive: highest margin in catalog (62.1%), lowest inventory-to-revenue ratio at 94.5% (best inventory health among 26 categories), top-5 revenue per SKU at $360, and limited catalog size (561 SKUs vs 1,400-2,000 for top-revenue categories). The 2.7% revenue share reflects supply ceiling more than demand weakness — each existing SKU generates more revenue than Sweaters, Active, or Fashion Hoodies per unit. Catalog expansion (SKU count) is the lever, not marketing spend on existing assortment. Conversely, **Clothing Sets and Suits are quadruple-negative**: bottom-tier on margin, inventory health, revenue, and catalog size simultaneously — clean discontinuation candidates rather than fixable opportunities.
 
