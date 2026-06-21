@@ -826,9 +826,9 @@ RETURN
 
 **Why this matters strategically**
 
-The Executive Overview KPI displays `▲ +XX%` (green) or `▼ –XX%` (red) — simple visual signal. But the underlying measure must handle filter contexts the analyst doesn't directly control: every Hero chart sub-year click, every multi-select Ctrl+combination, every Year slicer state. Defensive DAX is what separates a robust dashboard (gracefully handles all states) from one that displays errors or wrong numbers under realistic exploration.
+The Executive Overview KPI displays `▲ +XX%` (green) or `▼ –XX%` (red) — simple visual signal. But the underlying measure must handle filter contexts the analyst doesn't directly control: every Hero chart sub-year click, every multi-select Ctrl+combination, every Year slicer state. Defensive DAX prevents displaying errors or wrong numbers under realistic exploration.
 
-Standard advice for KPIs is "show simple numbers." This measure's OUTPUT is simple (one % with arrow), but the underlying logic guards against every UI state the dashboard exposes — a discipline most Power BI work skips.
+Standard advice for KPIs is "show simple numbers." This measure's OUTPUT is simple (one % with arrow), but the underlying logic handles every UI state the dashboard can produce, including ambiguous selections (multi-year Ctrl+click) that return BLANK rather than misleading values.
 
 ### Static SQL outputs — three distinct architectural roles
 
